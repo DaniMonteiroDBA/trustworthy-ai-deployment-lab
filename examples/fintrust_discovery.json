@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1",
+  "record_type": "synthetic_discovery_example",
+  "client": {
+    "client_id": "fintrust-demo",
+    "sector": "financial_services",
+    "synthetic": true
+  },
+  "use_case": {
+    "use_case_id": "fintrust-policy-action",
+    "problem": "Employees need to interpret an internal purchasing policy and prepare exception requests safely.",
+    "business_owner": "fictional-procurement-sponsor",
+    "success_metric": "Rate of policy answers supported by the applicable policy version, subject to human review.",
+    "non_ai_alternative": "A rule-based decision tree and a searchable document portal."
+  },
+  "stage": "DISCOVER",
+  "evidence": [
+    {
+      "evidence_id": "e-sim-001",
+      "class": "DECLARED",
+      "verification_status": "UNVERIFIED",
+      "source": "synthetic stakeholder statement",
+      "summary": "Employees report difficulty locating the applicable purchasing policy."
+    },
+    {
+      "evidence_id": "e-sim-002",
+      "class": "DOCUMENTED",
+      "verification_status": "UNVERIFIED",
+      "source": "synthetic policy document — not yet implemented",
+      "summary": "A fictional purchasing policy will be provided for the technical reference case."
+    }
+  ],
+  "decision": {
+    "decision_id": "d-fintrust-001",
+    "stage": "DISCOVER",
+    "status": "IN_REVIEW",
+    "owner": "fictional-architect-reviewer",
+    "rationale": "A use case is specified, but the business baseline and policy corpus have not been verified.",
+    "evidence_ids": ["e-sim-001", "e-sim-002"],
+    "blockers": ["No measured business baseline", "No validated policy corpus"],
+    "alternatives": ["Rule-based decision tree", "Searchable document portal"]
+  }
+}
