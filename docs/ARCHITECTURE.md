@@ -1,6 +1,6 @@
 # AI Value & Adoption Studio — M1 Architecture
 
-**Status:** local synthetic M1 Studio, offline M2 evaluation, M3 review worksheet/comparison and adoption policy, and M4 local fictional assessment workshop implemented; optional OpenAI adapter is mock-tested only. Cloud deployment, authentication, genuinely independent human calibration, enterprise authorization, live model evaluation and production security controls are **not verified**.
+**Status:** local synthetic M1 Studio, offline M2 evaluation, M3 review worksheet/comparison and adoption policy, M4 local fictional assessment workshop, and M5 fictional discovery/portfolio triage implemented; optional OpenAI adapter is mock-tested only. Cloud deployment, authentication, genuinely independent human calibration, enterprise authorization, live model evaluation and production security controls are **not verified**.
 
 ## Architecture boundary
 
@@ -35,8 +35,14 @@ The frontend is static HTML/CSS/JavaScript. It uses same-origin calls to a FastA
 | GET | `/api/adoption/assessments` | Lists recent fictional snapshot summaries |
 | GET | `/api/adoption/assessments/{assessment_id}` | Retrieves persisted input and recommendation with SHA-256 |
 | GET | `/api/adoption/assessments/{assessment_id}/report` | Renders an evidence-linked synthetic Markdown adoption brief |
+| POST | `/api/discovery/assessments` | Persists a fictional business-discovery input, categorical triage and proposed 30/60/90-day plan |
+| GET | `/api/discovery/assessments` | Lists the most recent fictional discovery snapshots |
+| GET | `/api/discovery/assessments/{discovery_id}` | Retrieves one frozen discovery input and advisory result |
+| GET | `/api/discovery/assessments/{discovery_id}/report` | Renders a deterministic fictional discovery and conditional-roadmap brief |
 
 The M4 assessment table is **append-only through the exposed API** and is independent from the `decisions`, `decision_invalidations`, and `evidence_reviews` tables. The source SHA-256 fingerprints the canonical fictional input but is not a secure audit signature. The UI is not a sensitive-data intake. See [Synthetic Assessment Workshop](SYNTHETIC_ASSESSMENT_WORKSHOP.md).
+
+The M5 discovery snapshot table is likewise **append-only through its API** and has a separate source hash and policy output. The M5 portfolio renders only the **latest snapshot per fictional client/use-case pair**, grouped by triage category, while preserving historical records. It does not calculate a score, cross-sector ordering, ROI, or authenticated customer approvals. See [Discovery & Portfolio Triage](DISCOVERY_PORTFOLIO.md).
 
 ## Stage state and history
 
@@ -68,6 +74,7 @@ The current code implements **application-level workflow checks**, not legal aut
 - **M3 implemented portion:** provenance-bound synthetic reviewer worksheets with immutable source fields, two-sheet comparison, explicit reviewer disagreements, critical-failure lists, and bounded live-run case volume (without a USD cap). See [Human Review Protocol](HUMAN_REVIEW_PROTOCOL.md).
 - **M3 adoption policy slice:** explicit evidence links, eight mandatory decision dimensions plus high-risk independent review, blocker precedence and four illustrative recommendations. All advisory only. See [Adoption Decision Engine](ADOPTION_DECISION_ENGINE.md).
 - **M4 implemented slice:** editable fictional assessment form, strict input boundary, local append-only snapshots, SHA-256 and advisory Markdown brief; not a real customer workspace. See [Synthetic Assessment Workshop](SYNTHETIC_ASSESSMENT_WORKSHOP.md).
+- **M5 implemented slice:** structured fictional business interview, constrained evidence-status claims, non-AI option comparison, categorical portfolio triage, conditional 30/60/90 roadmap and a separate immutable-through-API snapshot table. See [Discovery & Portfolio Triage](DISCOVERY_PORTFOLIO.md).
 - **M3 pending:** actually independent human-calibrated evals, adjudication, live model testing and cost tracking, reviewed measured-evidence ingestion, threat model, safe telemetry and repeatable release gates.
 - **M4:** real deployment architecture, privacy and retention decisions, synthetic account analytics, operational readiness and handoff.
 

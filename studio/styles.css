@@ -48,3 +48,22 @@
 .assessment-blocker>label{margin-top:12px}.assessment-modal .assessment-confirm{display:flex;flex-direction:row;gap:13px;align-items:flex-start;border:1px solid #51665a;background:#1b3b36;border-radius:9px;padding:14px;line-height:1.6;font-weight:500}
 .assessment-modal .assessment-confirm input{width:18px;height:18px;flex-shrink:0;accent-color:var(--aqua);margin:2px 0 0}
 @media(max-width:800px){.assessment-history-grid{grid-template-columns:1fr}.assessment-modal .modal-body{padding:19px}.assessment-form-grid{grid-template-columns:1fr}.assessment-subheading{align-items:start;flex-direction:column}.assessment-modal .form-actions{flex-wrap:wrap}.assessment-workshop{padding:18px}}
+.discovery-panel{min-height:0;margin-top:24px;background:radial-gradient(circle at 90% 0%,#234c4b68,transparent 40%),linear-gradient(145deg,#102e36,#101d2e)}
+.discovery-portfolio>.mini-disclaimer{margin:1px 0 14px}
+.discovery-buckets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.discovery-bucket{background:#0b1c29;border:1px solid #2d4f5b;border-radius:12px;padding:17px;min-width:0}
+.discovery-bucket-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.discovery-bucket-heading strong{font:700 23px var(--heading);color:#d2f6eb}
+.discovery-bucket>p{min-height:34px;color:#91b0bd;font-size:11px;line-height:1.6;margin:10px 0 15px}
+.discovery-flag{color:#a9ffdf;background:#174539;border:1px solid #3b8977;letter-spacing:.9px;font-weight:800;font-size:10px;padding:6px 9px;border-radius:20px}
+.discovery-flag.refine-scope{background:#1c324b;border-color:#4a7099;color:#a8cff4}
+.discovery-flag.discovery-hold{background:#443722;border-color:#8c6e45;color:#f1d39a}
+.discovery-flag.do-not-pursue{background:#442a31;border-color:#95616c;color:#ffb5b0}
+.discovery-card{margin-top:9px;padding:15px;background:#122b38;border:1px solid #2f5560;border-radius:9px;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.discovery-card.highlight{border-color:#6ccbb8;box-shadow:inset 3px 0 #70e1c4}
+.discovery-card h4{margin:1px 0;font:600 14px/1.35 var(--heading)}.discovery-card small{color:#8cabba;font-size:10px;overflow-wrap:anywhere}
+.discovery-card .button{margin-top:5px}.discovery-empty{color:#7495a4;font-size:11px;padding:12px;border:1px dashed #2d4b58;border-radius:8px}
+.discovery-group{border:1px solid #365966;border-radius:11px;padding:18px;display:grid;gap:15px;background:#112d38}
+.discovery-group legend{color:#b3f5de;font-size:11px;letter-spacing:1.1px;font-weight:800;padding:0 8px}
+.discovery-group>.mini-disclaimer{margin:0}.discovery-group .assessment-form-grid{gap:13px}
+@media(max-width:800px){.discovery-buckets{grid-template-columns:1fr}.discovery-panel{padding:18px}.discovery-group{padding:12px}}

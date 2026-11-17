@@ -161,10 +161,24 @@ class StudioStore:
                     recommendation_json TEXT NOT NULL,
                     created_at TEXT NOT NULL
                 );
+                CREATE TABLE IF NOT EXISTS discovery_assessments (
+                    discovery_id TEXT PRIMARY KEY,
+                    client_id TEXT NOT NULL,
+                    case_id TEXT NOT NULL,
+                    title TEXT NOT NULL,
+                    risk_tier TEXT NOT NULL,
+                    recommended_state TEXT NOT NULL,
+                    policy_version TEXT NOT NULL,
+                    source_sha256 TEXT NOT NULL,
+                    input_json TEXT NOT NULL,
+                    recommendation_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
                 CREATE INDEX IF NOT EXISTS evidence_case_idx ON evidence(case_id);
                 CREATE INDEX IF NOT EXISTS decision_case_stage_idx ON decisions(case_id, stage, created_at);
                 CREATE INDEX IF NOT EXISTS invalidation_decision_idx ON decision_invalidations(decision_id);
                 CREATE INDEX IF NOT EXISTS adoption_created_idx ON adoption_assessments(created_at);
+                CREATE INDEX IF NOT EXISTS discovery_created_idx ON discovery_assessments(created_at);
                 """
             )
             count = conn.execute("SELECT count(*) FROM clients").fetchone()[0]
@@ -394,5 +408,44 @@ class StudioStore:
                 """SELECT assessment_id, client_id, case_id, title, risk_tier,
                           recommended_state, policy_version, source_sha256, created_at
                    FROM adoption_assessments ORDER BY rowid DESC LIMIT 100"""
+            ).fetchall()
+        return [dict(row) for row in rows]
+
+    def add_discovery(self, candidate: dict, recommendation: dict) -> dict:
+        """Persist one independent, append-only fictional discovery snapshot."""
+        input_json = json.dumps(candidate, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        result_json = json.dumps(recommendation, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        discovery_id = f"discovery-demo-{uuid4().hex}"
+        source_sha256 = hashlib.sha256(input_json.encode("utf-8")).hexdigest()
+        with self.connection() as conn:
+            conn.execute(
+                """INSERT INTO discovery_assessments
+                (discovery_id, client_id, case_id, title, risk_tier, recommended_state,
+                 policy_version, source_sha256, input_json, recommendation_json, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (discovery_id, candidate["client_id"], candidate["case_id"], candidate["title"],
+                 candidate["risk_tier"], recommendation["recommended_state"],
+                 recommendation["policy_version"], source_sha256, input_json, result_json, utc_now()),
+            )
+        return self.discovery(discovery_id) or {}
+
+    def discovery(self, discovery_id: str) -> dict | None:
+        with self.connection() as conn:
+            row = conn.execute(
+                "SELECT * FROM discovery_assessments WHERE discovery_id=?", (discovery_id,)
+            ).fetchone()
+        if row is None:
+            return None
+        record = dict(row)
+        record["input"] = json.loads(record.pop("input_json"))
+        record["recommendation"] = json.loads(record.pop("recommendation_json"))
+        return record
+
+    def discoveries(self) -> list[dict]:
+        with self.connection() as conn:
+            rows = conn.execute(
+                """SELECT discovery_id, client_id, case_id, title, risk_tier,
+                          recommended_state, policy_version, source_sha256, created_at
+                   FROM discovery_assessments ORDER BY rowid DESC LIMIT 200"""
             ).fetchall()
         return [dict(row) for row in rows]

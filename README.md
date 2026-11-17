@@ -2,7 +2,7 @@
 
 **From enterprise AI opportunity to trustworthy deployment and measurable adoption.**
 
-> **Project status — M1 local Studio, M2 offline Evaluation Factory, M3 review/adoption policy, and M4 fictional assessment workshop implemented.** The evidence-first method, synthetic-client Studio, SQLite API, versioned offline evaluations, non-AI baseline, and automated local tests are available. M3 generates blank human-review worksheets and computes risk-aware synthetic adoption recommendations with explicit blockers. M4 adds **editable fictional assessments, append-only local snapshots, and deterministic evidence-linked executive briefs**. An opt-in OpenAI Responses adapter is **mock-tested only**. **Real human calibration, live model quality, authenticated users, enterprise tenant security, cloud deployment, and customer adoption are NOT validated.**
+> **Project status — local M1 Studio, offline M2 evaluation, M3 adoption policy/review worksheets, M4 fictional assessment workshop, and M5 fictional discovery portfolio implemented.** The synthetic-client Studio, SQLite API, versioned offline evaluations and automated local tests are available. M4 adds editable validation-to-adoption assessments and evidence-linked briefs; M5 adds **business discovery, non-AI comparator, categorical opportunity triage and conditional 30/60/90-day plans**. An opt-in OpenAI Responses adapter is **mock-tested only**. **Real human calibration, live model quality, authenticated users, enterprise tenant security, cloud deployment, and customer adoption are NOT validated.**
 
 **Maintainer:** [Dani Monteiro](https://www.linkedin.com/in/danimonteirodba/) · [Portfolio](https://danimonteiro.tech/)
 
@@ -23,11 +23,11 @@ The lab has three connected design components:
 
 1. **Trusted AI Adoption Framework** — seven human-accountable decision stages and evidence contracts.
 2. **AI Architecture & Evaluation Lab** — a first synthetic policy-answering and abstention evaluation (M2 offline); broader agentic runtime still planned.
-3. **AI Value & Adoption Studio** — a local application for synthetic clients, evidence, simulated human decision gates, executive briefs, four fixed cross-client adoption recommendations, and a custom **fictional assessment workshop** (**M1/M3/M4 reference slices**; enterprise authorization and adoption tracking planned).
+3. **AI Value & Adoption Studio** — a local application for synthetic clients, evidence, simulated human decision gates, executive briefs, fictional discovery/portfolio triage, fixed cross-client adoption recommendations, and a custom **fictional assessment workshop** (**M1–M5 reference slices**; enterprise authorization and measured adoption tracking planned).
 
 The methodology is intended to be adaptable across organizations and technology providers. The technical reference case will demonstrate OpenAI integration without implying that all customers must adopt the same platform.
 
-**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Evaluation Factory](docs/EVALUATION_FACTORY.md) · [Human Review Protocol](docs/HUMAN_REVIEW_PROTOCOL.md) · [Adoption Decision Engine](docs/ADOPTION_DECISION_ENGINE.md) · [Fictional Assessment Workshop](docs/SYNTHETIC_ASSESSMENT_WORKSHOP.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
+**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Evaluation Factory](docs/EVALUATION_FACTORY.md) · [Human Review Protocol](docs/HUMAN_REVIEW_PROTOCOL.md) · [Discovery & Portfolio Triage](docs/DISCOVERY_PORTFOLIO.md) · [Adoption Decision Engine](docs/ADOPTION_DECISION_ENGINE.md) · [Fictional Assessment Workshop](docs/SYNTHETIC_ASSESSMENT_WORKSHOP.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
 
 ## Run the local AI Value & Adoption Studio
 
@@ -115,6 +115,14 @@ The Studio's **New fictional assessment** workshop lets you rehearse a consultin
 Saving appends a new snapshot to the **local SQLite database**, evaluates blocker precedence, and presents a downloadable deterministic Markdown report with input hash and dimension-level traceability. The original four examples stay frozen. The seven-stage human-decision log remains separate and unchanged. **Neither the fictional checkbox nor an advisory `GO` authenticates a reviewer or approves deployment.**
 
 For the exact API, user walkthrough, restrictions and acceptance tests, see [Synthetic Assessment Workshop](docs/SYNTHETIC_ASSESSMENT_WORKSHOP.md). **Do not deploy the editable API publicly or enter real client data**: there is no authentication or secure enterprise tenancy.
+
+## Lead an early AI discovery and compare fictional opportunities (M5)
+
+The **AI Adoption Discovery** panel starts earlier than the validation-to-adoption assessment. Describe a fictional sponsor, users, business problem, existing workflow, success hypothesis, credible non-AI alternative, and the maturity of available data, value, feasibility and change evidence. The local decision engine sorts explicit blockers into `DO_NOT_PURSUE`, `DISCOVERY_HOLD`, `REFINE_SCOPE` or `SHORTLIST_FOR_POV`—not an opaque maturity percentage.
+
+Each saved snapshot produces an **evidence-conscious, conditional 30/60/90-day executive plan**. The portfolio board shows the latest version of each fictional opportunity within its triage category, without pretending that two opportunities in the same category have been financially ranked. Historic snapshots remain stored separately from stage decisions and M4 adoption assessments. **Even `SHORTLIST_FOR_POV` does not authorize a proof of value, spending or deployment.**
+
+See [Discovery & Portfolio Triage](docs/DISCOVERY_PORTFOLIO.md) for questions, source requirements, trust boundaries, API and tests. The local data is not confidential or access-controlled; never use it for real Kaspper or customer information without a separately authorized private design.
 
 ```bash
 python -m unittest discover -s tests -v

@@ -97,6 +97,14 @@
             <div class="evaluation-note">OFFLINE / ZERO MODEL API CALLS · NO REAL CUSTOMER DATA · NOT A DEPLOYMENT APPROVAL</div>
             <div id="evaluation-results" class="evaluation-results" aria-live="polite"><div class="empty-state">No local evaluation recorded yet. Run the versioned synthetic suite to see an evidence-based comparison.</div></div>
           </section>
+          <section class="panel discovery-panel" aria-label="Fictional AI discovery and portfolio triage">
+            <div class="evaluation-header">
+              <div><div class="eyebrow muted">M5 · AI ADOPTION DISCOVERY</div><h3>Start with a decision, not a demo.</h3><p>Interview a fictional sponsor, test the business case against a non-AI alternative, surface data and feasibility constraints, and generate a conditional 30/60/90-day plan. Compare the latest fictional opportunities by transparent triage category, never by an invented ROI score.</p></div>
+              <button id="discovery-create-button" class="button primary" type="button">+ New discovery</button>
+            </div>
+            <div class="evaluation-note">SIMULATED EVIDENCE ONLY · NO REAL DATA OR AUTHENTICATED REVIEWERS · NEVER A POV OR RELEASE APPROVAL</div>
+            <div id="discovery-portfolio" class="discovery-portfolio" aria-live="polite"><div class="empty-state">No fictional discovery interviews recorded. Create one to examine its proposed next steps.</div></div>
+          </section>
           <section class="panel adoption-panel" aria-label="Fictional AI adoption decision recommendations">
             <div class="evaluation-header">
               <div><div class="eyebrow muted">M3 · ADOPTION DECISION ENGINE</div><h3>Recommend a path. Show the evidence.</h3><p>Four frozen synthetic scenarios demonstrate how business value, data rights, AI evaluation, cost and risk change the recommended next step. These are examples—not decisions on the editable Studio records above.</p></div>
@@ -173,6 +181,52 @@
         <div id="assessment-blockers" class="assessment-blockers"></div>
         <label class="assessment-confirm"><input type="checkbox" name="confirmed_fictional" required /><span>I confirm that all entries are invented demonstration material. I understand this is not a customer assessment or a human approval.</span></label>
         <div class="form-actions"><button type="button" class="button ghost" data-close="assessment-dialog">Cancel</button><button type="submit" class="button primary" id="assessment-submit">Save synthetic snapshot &amp; evaluate</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="discovery-dialog" class="modal assessment-modal">
+      <form id="discovery-form" class="modal-body">
+        <div class="modal-heading"><div><div class="eyebrow muted">SYNTHETIC / LOCAL CONSULTING EXERCISE</div><h2>AI opportunity discovery</h2></div><button type="button" class="close-button" data-close="discovery-dialog" aria-label="Close">×</button></div>
+        <p>Record an invented organization, invented stakeholders, hypotheses and sources. This local form has no authentication or confidentiality protection. The result is a <strong>discovery recommendation</strong>, not permission to run a pilot.</p>
+        <fieldset class="discovery-group">
+          <legend>01 · Business context and alternative</legend>
+          <div class="assessment-form-grid">
+            <label>Opportunity title<input name="title" minlength="8" maxlength="120" required placeholder="Fictional procurement policy assistant" /></label>
+            <label>Sector (fictional)<input name="sector" minlength="3" maxlength="80" required placeholder="Financial services" /></label>
+            <label>Client ID ending in -demo<input name="client_id" minlength="8" maxlength="70" pattern="[a-z0-9][a-z0-9-]*-demo" required /></label>
+            <label>Use-case ID matching client stem<input name="case_id" minlength="4" maxlength="100" pattern="[a-z0-9][a-z0-9-]*" required /></label>
+            <label>Risk tier<select name="risk_tier"><option value="HIGH">HIGH — independent-review plan needed</option><option value="MEDIUM">MEDIUM</option><option value="LOW">LOW</option></select></label>
+            <label>Fictional sponsor<input name="business_owner" minlength="3" maxlength="120" required /></label>
+          </div>
+          <label>Users affected by this workflow<input name="affected_users" minlength="8" maxlength="240" required placeholder="Fictional analysts and managers" /></label>
+          <label>Business problem, in the users' terms<textarea name="problem" minlength="20" maxlength="1500" rows="2" required></textarea></label>
+          <div class="assessment-form-grid">
+            <label>Current process / baseline workflow<textarea name="current_workflow" minlength="12" maxlength="700" rows="2" required></textarea></label>
+            <label>Success measure (hypothesis)<textarea name="success_metric" minlength="8" maxlength="400" rows="2" required></textarea></label>
+            <label>Expected benefit (not an observed outcome)<textarea name="expected_benefit" minlength="12" maxlength="700" rows="2" required></textarea></label>
+            <label>Credible non-AI alternative<textarea name="non_ai_alternative" minlength="12" maxlength="700" rows="2" required></textarea></label>
+          </div>
+        </fieldset>
+        <fieldset class="discovery-group">
+          <legend>02 · Evidence maturity and blocking conditions</legend>
+          <p class="mini-disclaimer">Statuses are self-declared simulations. Sources are invented titles, not external documents or proof of consent. Unknown assumptions deliberately hold the recommendation.</p>
+          <div class="assessment-form-grid">
+            <label>Baseline<select name="baseline_status"><option value="UNKNOWN">UNKNOWN / NOT MEASURED</option><option value="SIMULATED_MEASURED">SIMULATED_MEASURED</option></select></label>
+            <label>Fictional baseline source<input name="baseline_source" maxlength="240" placeholder="Invented comparative baseline note" /></label>
+            <label>Value hypothesis<select name="value_status"><option value="UNKNOWN">UNKNOWN</option><option value="PLAUSIBLE_SIMULATED">PLAUSIBLE_SIMULATED</option><option value="UNSUPPORTED">UNSUPPORTED → STOP</option></select></label>
+            <label>Non-AI comparison<select name="alternative_status"><option value="NOT_COMPARED">NOT COMPARED</option><option value="COMPARED_SIMULATED">COMPARED_SIMULATED</option></select></label>
+            <label>Fictional comparison source<input name="alternative_source" maxlength="240" placeholder="Invented options comparison note" /></label>
+            <label>Data permissions<select name="data_permission"><option value="UNKNOWN">UNKNOWN</option><option value="GRANTED_SIMULATED">GRANTED_SIMULATED</option><option value="RESTRICTED">RESTRICTED → HOLD</option><option value="DENIED">DENIED → STOP</option></select></label>
+            <label>Fictional permission source<input name="permission_source" maxlength="240" placeholder="Invented approval description" /></label>
+            <label>Data fitness<select name="data_quality"><option value="UNKNOWN">UNKNOWN</option><option value="SUITABLE_SIMULATED">SUITABLE_SIMULATED</option><option value="GAP">GAP → REFINE</option><option value="UNUSABLE">UNUSABLE → STOP</option></select></label>
+            <label>Delivery feasibility<select name="feasibility"><option value="UNKNOWN">UNKNOWN</option><option value="FEASIBLE_SIMULATED">FEASIBLE_SIMULATED</option><option value="GAP">GAP → REFINE</option><option value="BLOCKED">BLOCKED → STOP</option></select></label>
+            <label>People/change readiness<select name="adoption_readiness"><option value="UNKNOWN">UNKNOWN</option><option value="PLAN_SIMULATED">PLAN_SIMULATED</option><option value="GAP">GAP → REFINE</option></select></label>
+            <label>Independent review plan<select name="independent_review"><option value="UNKNOWN">UNKNOWN / NOT PLANNED</option><option value="PLANNED_SIMULATED">PLANNED_SIMULATED</option></select></label>
+          </div>
+          <label>Additional fictional constraints (one per line, max 12)<textarea name="constraints" maxlength="3600" rows="2" placeholder="Fictional integration dependency"></textarea></label>
+        </fieldset>
+        <label class="assessment-confirm"><input type="checkbox" name="confirmed_fictional" required /><span>Every organization, person, source, permission and figure here is invented. I understand this is not a real assessment, a pilot authorization or a deployment approval.</span></label>
+        <div class="form-actions"><button type="button" class="button ghost" data-close="discovery-dialog">Cancel</button><button type="submit" class="button primary" id="discovery-submit">Save discovery &amp; generate plan</button></div>
       </form>
     </dialog>
 

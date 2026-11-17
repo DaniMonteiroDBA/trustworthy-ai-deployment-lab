@@ -26,6 +26,7 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 - [x] Generate deterministic synthetic executive opportunity briefs.
 - [x] Expose read-only, risk-aware recommendations for four explicitly fictional validation-to-adoption scenarios without changing decision records.
 - [x] Build a local-only fictional assessment workshop with eight/nine editable criteria, optional blockers, append-only snapshots and deterministic evidence-linked reports; verified by tests, not an authenticated customer intake.
+- [x] Add fictional early discovery interviews, non-AI comparator, evidence-aware opportunity triage, append-only snapshots, and conditional 30/60/90-day briefs; no real client portfolio evaluation or ROI claim.
 - [ ] Add role-based access design, privacy inventory and threat boundaries.
 - [ ] Produce the complete technical account plan and interview templates.
 
@@ -64,6 +65,7 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 ## P4 — Adoption and external demonstration
 
 - [x] Implement the first **local synthetic assessment workshop** with a versioned advisory policy, traceable frozen inputs, and a download-ready Markdown decision brief. This is **not** a customer engagement or production deployment.
+- [x] Implement local **synthetic discovery portfolio triage** with latest-per-opportunity cards and explicit non-scored categories; see [M5 design and tests](docs/DISCOVERY_PORTFOLIO.md).
 - [ ] Add synthetic account portfolio and adoption progress views.
 - [ ] Develop ChatGPT Enterprise and Codex adoption playbooks without false deployment claims.
 - [ ] Create an authorized, decision-ready **customer** executive report and implementation handoff; the fictional Markdown brief is implemented but has no authenticated/approved evidence.

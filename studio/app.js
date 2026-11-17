@@ -26,7 +26,7 @@
   const UNKNOWN_REASON = "Not assessed: sufficient fictional supporting evidence has not been provided.";
   const UNKNOWN_ACTION = "Gather and review attributable evidence before recommending progress.";
 
-  const state = { clients: [], client: null, record: null, stageIndex: 0, reportText: "", reportFileName: "", adoption: null, customAssessments: [] };
+  const state = { clients: [], client: null, record: null, stageIndex: 0, reportText: "", reportFileName: "", adoption: null, customAssessments: [], discoveryRecords: [] };
   const $ = id => document.getElementById(id);
   const escape = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
   const listLines = text => String(text || "").split("\n").map(s => s.trim()).filter(Boolean);
@@ -281,6 +281,100 @@
     } catch(error) { toast(error.message, true); }
   }
 
+  const DISCOVERY_BUCKETS = [
+    {id:"SHORTLIST_FOR_POV",label:"SHORTLIST FOR POV",description:"Fictional assumptions satisfy discovery gates; a human must authorize any test."},
+    {id:"REFINE_SCOPE",label:"REFINE SCOPE",description:"Correctable feasibility, data-quality or change gaps remain."},
+    {id:"DISCOVERY_HOLD",label:"MORE DISCOVERY",description:"Missing evidence, permission or an accountable review plan."},
+    {id:"DO_NOT_PURSUE",label:"DO NOT PURSUE",description:"Proposed path includes a terminal barrier."}
+  ];
+
+  function openDiscovery() {
+    const form = $("discovery-form");
+    form.reset();
+    if (state.record) {
+      form.elements.title.value = `Fictional discovery — ${state.record.title}`.slice(0,120);
+      form.elements.client_id.value = state.record.client_id;
+      form.elements.case_id.value = state.record.case_id;
+      form.elements.sector.value = state.record.sector;
+      form.elements.risk_tier.value = state.record.risk_tier;
+      form.elements.business_owner.value = state.record.business_owner;
+      form.elements.problem.value = state.record.problem;
+      form.elements.success_metric.value = state.record.success_metric;
+      form.elements.non_ai_alternative.value = state.record.non_ai_alternative;
+    }
+    openModal("discovery-dialog");
+  }
+
+  function renderDiscoveryPortfolio() {
+    const seen = new Set();
+    const latest = state.discoveryRecords.filter(row => {
+      const key = `${row.client_id}\u0000${row.case_id}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    const target = $("discovery-portfolio");
+    if (!latest.length) {
+      target.innerHTML = '<div class="empty-state">No fictional discoveries saved. Start an interview to generate an auditable next-step recommendation and an executive plan.</div>';
+      return;
+    }
+    target.innerHTML = `<p class="mini-disclaimer">Latest snapshot per fictional opportunity (${latest.length} distinct use cases, ${state.discoveryRecords.length} recent snapshots stored). Categories are <strong>not</strong> a numerical ranking; ties require a real portfolio decision.</p><div class="discovery-buckets">${DISCOVERY_BUCKETS.map(bucket => {
+      const matching = latest.filter(a => a.recommended_state === bucket.id);
+      return `<div class="discovery-bucket"><div class="discovery-bucket-heading"><span class="discovery-flag ${escape(bucket.id.toLowerCase().replaceAll('_','-'))}">${escape(bucket.label)}</span><strong>${matching.length}</strong></div><p>${escape(bucket.description)}</p>${matching.length ? matching.map(a => `<article class="discovery-card ${state.client?.client_id === a.client_id ? 'highlight' : ''}"><span class="eyebrow muted">${escape(a.risk_tier)} · FICTIONAL</span><h4>${escape(a.title)}</h4><small>${escape(a.client_id)} · ${escape(a.case_id)}</small><button type="button" class="button outline small" data-discovery-report="${escape(a.discovery_id)}">Inspect 30/60/90 plan ↗</button></article>`).join('') : '<div class="discovery-empty">No opportunities in this category</div>'}</div>`;
+    }).join('')}</div>`;
+    target.querySelectorAll("[data-discovery-report]").forEach(button => button.addEventListener("click", () => showDiscoveryReport(button.dataset.discoveryReport)));
+  }
+
+  async function loadDiscoveries() {
+    state.discoveryRecords = await api("/api/discovery/assessments");
+    renderDiscoveryPortfolio();
+  }
+
+  async function showDiscoveryReport(discoveryId) {
+    try {
+      state.reportText = await api(`/api/discovery/assessments/${encodeURIComponent(discoveryId)}/report`);
+      state.reportFileName = `fictional-${discoveryId}-30-60-90-plan.md`;
+      $("report-kind-label").textContent = "FICTIONAL DISCOVERY / CONDITIONAL PLAN";
+      $("report-title").textContent = "AI opportunity & 30/60/90 brief";
+      $("report-content").textContent = state.reportText;
+      openModal("report-dialog");
+    } catch(error) { toast(error.message, true); }
+  }
+
+  async function onDiscoverySubmit(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const button = $("discovery-submit");
+    const field = name => form.elements[name].value.trim();
+    const payload = {
+      synthetic:true,confirmed_fictional:form.elements.confirmed_fictional.checked,
+      client_id:field("client_id"),case_id:field("case_id"),title:field("title"),
+      sector:field("sector"),risk_tier:field("risk_tier"),business_owner:field("business_owner"),
+      affected_users:field("affected_users"),problem:field("problem"),current_workflow:field("current_workflow"),
+      success_metric:field("success_metric"),expected_benefit:field("expected_benefit"),
+      non_ai_alternative:field("non_ai_alternative"),baseline_status:field("baseline_status"),
+      baseline_source:field("baseline_source"),value_status:field("value_status"),
+      alternative_status:field("alternative_status"),alternative_source:field("alternative_source"),
+      data_permission:field("data_permission"),permission_source:field("permission_source"),
+      data_quality:field("data_quality"),feasibility:field("feasibility"),
+      adoption_readiness:field("adoption_readiness"),independent_review:field("independent_review"),
+      constraints:listLines(field("constraints"))
+    };
+    if (payload.constraints.length > 12 || payload.constraints.some(s => s.length > 300)) {
+      toast("Use up to 12 fictional constraints, each no more than 300 characters.", true);
+      return;
+    }
+    button.disabled = true;
+    try {
+      const saved = await api("/api/discovery/assessments", {method:"POST",body:JSON.stringify(payload)});
+      closeModal("discovery-dialog");
+      await loadDiscoveries();
+      toast(`Fictional discovery: ${saved.recommendation.recommended_state}. No pilot or release authorized.`);
+      await showDiscoveryReport(saved.discovery_id);
+    } catch(error) { toast(error.message, true); }
+    finally { button.disabled = false; }
+  }
+
   async function onAssessmentSubmit(event) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -420,6 +514,8 @@
       if (hiddenDimension) hiddenDimension.open = true;
     }, true);
     $("assessment-form").addEventListener("submit", onAssessmentSubmit);
+    $("discovery-create-button").addEventListener("click", openDiscovery);
+    $("discovery-form").addEventListener("submit", onDiscoverySubmit);
     $("review-form").addEventListener("submit", onReviewSubmit);
     $("decision-form").addEventListener("submit", onDecisionSubmit);
     try {
@@ -430,6 +526,8 @@
       catch(error) { $("adoption-results").textContent = `Could not load simulated recommendations: ${error.message}`; }
       try {await loadAssessmentHistory();}
       catch(error) {$("assessment-history").textContent = `Could not load saved assessments: ${error.message}`;}
+      try {await loadDiscoveries();}
+      catch(error) {$("discovery-portfolio").textContent = `Could not load fictional discoveries: ${error.message}`;}
       try { renderEvaluation(await api("/api/evaluations/latest")); } catch(_) { /* fresh local database */ }
     } catch(error) {toast(`Could not load the Studio: ${error.message}`, true);}
   }

@@ -21,6 +21,9 @@ from adoption.engine import evaluate as evaluate_adoption
 from adoption.report import executive_markdown as adoption_executive_markdown
 from adoption.run import run as run_adoption_scenarios
 from adoption.schemas import SyntheticAssessmentInput
+from discovery.engine import evaluate as evaluate_discovery
+from discovery.report import executive_markdown as discovery_executive_markdown
+from discovery.schemas import DiscoveryInput
 from app.store import STAGES, StudioStore
 from evals.engine import CORPUS_PATH, DATASET_PATH, SafeRuleCandidate, digest, execute, load_fixtures
 
@@ -171,6 +174,35 @@ def create_app(database_path: Path | str | None = None) -> FastAPI:
         record = store.adoption_assessment(assessment_id)
         if record is None:
             raise HTTPException(404, "Synthetic assessment not found")
+        return record
+
+    @application.get("/api/discovery/assessments")
+    def discoveries() -> list[dict]:
+        return store.discoveries()
+
+    @application.post("/api/discovery/assessments", status_code=201)
+    def create_discovery(payload: DiscoveryInput) -> dict:
+        # An attestation is not a substitute for real confidentiality screening.
+        candidate = payload.model_dump()
+        candidate.pop("confirmed_fictional")
+        try:
+            recommendation = evaluate_discovery(candidate)
+        except (ValueError, TypeError) as exc:
+            raise HTTPException(422, str(exc)) from None
+        return store.add_discovery(candidate, recommendation)
+
+    @application.get("/api/discovery/assessments/{discovery_id}/report", response_class=PlainTextResponse)
+    def discovery_report(discovery_id: str) -> str:
+        record = store.discovery(discovery_id)
+        if record is None:
+            raise HTTPException(404, "Fictional discovery assessment not found")
+        return discovery_executive_markdown(record)
+
+    @application.get("/api/discovery/assessments/{discovery_id}")
+    def discovery_record(discovery_id: str) -> dict:
+        record = store.discovery(discovery_id)
+        if record is None:
+            raise HTTPException(404, "Fictional discovery assessment not found")
         return record
 
     @application.get("/api/evaluations/latest")

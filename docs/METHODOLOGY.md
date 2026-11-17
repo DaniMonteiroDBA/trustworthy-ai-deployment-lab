@@ -29,6 +29,8 @@ Model outputs may recommend a state, but **only a designated human owner** recor
 
 **Executable reference slice:** the [Adoption Decision Engine](ADOPTION_DECISION_ENGINE.md) now recommends one of these states for the `VALIDATE → ADOPT` transition using eight evidence dimensions, an additional independent-review criterion for high-risk cases, and explicit blocker precedence. Its four example results are synthetic and **cannot become authorized stage approvals**. The other stage-transition policies remain conceptual.
 
+**Earlier-stage reference slice:** [AI Discovery & Portfolio Triage](DISCOVERY_PORTFOLIO.md) structures a fictional business interview and returns one of four **non-authoritative investigation buckets** (`SHORTLIST_FOR_POV`, `REFINE_SCOPE`, `DISCOVERY_HOLD`, `DO_NOT_PURSUE`) plus a conditional 30/60/90-day plan. These are **not** authoritative seven-stage gate states, measurable cross-client rankings or permissions to begin a pilot.
+
 ## Evidence strength and provenance
 
 Do not equate evidence type with truth:

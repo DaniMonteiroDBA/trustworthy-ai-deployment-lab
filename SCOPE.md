@@ -1,6 +1,6 @@
 # Trustworthy AI Deployment Lab — Scope v1.1
 
-**Status:** design baseline; implementation and customer validation have not been completed.  
+**Status:** design baseline with local synthetic M1–M5 reference slices now implemented; end-to-end production implementation and actual customer validation have not been completed.  
 **Owner:** Dani Monteiro  
 **Primary goal:** demonstrate a reusable method for taking enterprise AI opportunities from discovery through evidence-based deployment and measurable adoption.
 
@@ -12,7 +12,7 @@ The lab will connect three components:
 
 1. **Trusted AI Adoption Framework:** reusable consulting method and decision gates.
 2. **AI Architecture & Evaluation Lab:** one working technical reference case with API, retrieval, tools, tests, security boundaries, and reproducible evaluations.
-3. **AI Value & Adoption Studio:** planned client-portfolio application to track discovery, priorities, architecture decisions, proof of value, readiness, adoption, and outcomes.
+3. **AI Value & Adoption Studio:** partially implemented local fictional portfolio, discovery triage, adoption-policy workshop and evidence/decision records; authenticated enterprise accounts, actual adoption and outcomes remain planned.
 
 The framework is designed to be **vendor-neutral**. The public reference implementation may use OpenAI products to demonstrate applied AI skills; it will not imply that every client should choose those products.
 
@@ -111,6 +111,8 @@ This repository is an **independent public reference**. A potential Kaspper pilo
 | **M4 — Share** | Public demo, deployment guide, executive and technical walkthroughs | Accessible deployment, runbook, limitations, handoff, verified link and presentation |
 
 Completion dates, quality figures, and adoption outcomes will be recorded only when supported by observed evidence.
+
+**Incremental implementation note:** the local UI uses engineering-slice labels M1–M5 for executable checkpoints, which do not alter the original M0–M4 product-roadmap acceptance criteria above. The M5 [discovery reference](docs/DISCOVERY_PORTFOLIO.md) delivers only *fictional*, non-scored portfolio triage and proposed plans, not the verified cross-client account strategy envisioned by the finished product.
 
 ## Working definition of done
 
