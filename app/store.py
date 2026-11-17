@@ -139,8 +139,17 @@ class StudioStore:
                     alternatives_json TEXT NOT NULL,
                     created_at TEXT NOT NULL
                 );
+                CREATE TABLE IF NOT EXISTS decision_invalidations (
+                    invalidation_id TEXT PRIMARY KEY,
+                    decision_id TEXT NOT NULL REFERENCES decisions(decision_id),
+                    evidence_id TEXT NOT NULL REFERENCES evidence(evidence_id),
+                    review_id TEXT NOT NULL REFERENCES evidence_reviews(review_id),
+                    created_at TEXT NOT NULL,
+                    UNIQUE(decision_id, review_id)
+                );
                 CREATE INDEX IF NOT EXISTS evidence_case_idx ON evidence(case_id);
                 CREATE INDEX IF NOT EXISTS decision_case_stage_idx ON decisions(case_id, stage, created_at);
+                CREATE INDEX IF NOT EXISTS invalidation_decision_idx ON decision_invalidations(decision_id);
                 """
             )
             count = conn.execute("SELECT count(*) FROM clients").fetchone()[0]
@@ -220,18 +229,55 @@ class StudioStore:
             latest = {}
             for d in decisions:
                 latest.setdefault(d["stage"], d)
-            result["stage_states"] = self._stage_states(latest)
+            invalidations = {r[0] for r in conn.execute(
+                "SELECT decision_id FROM decision_invalidations WHERE decision_id IN "
+                "(SELECT decision_id FROM decisions WHERE case_id=?)", (case_id,)
+            ).fetchall()}
+            result["stage_states"] = self._stage_states(
+                latest, {item["evidence_id"]: item for item in result["evidence"]}, invalidations
+            )
             return result
 
     @staticmethod
-    def _stage_states(latest: dict[str, dict]) -> list[dict]:
+    def _stage_states(latest: dict[str, dict], evidence: dict[str, dict],
+                      invalidations: set[str]) -> list[dict]:
+        """Derive effective gates without rewriting the human decision history.
+
+        A recorded GO ceases to unlock later stages when its supporting evidence
+        is rejected or no longer verified. The original decision remains intact
+        and visible for audit; a fresh human review is needed to reopen the gate.
+        """
         states = []
         unlocked = True
         for stage in STAGES:
             recorded = latest.get(stage)
             state = recorded["status"] if recorded is not None and unlocked else "LOCKED" if not unlocked else "NOT_STARTED"
-            states.append({"stage": stage, "status": state, "decision": recorded if unlocked else None})
-            unlocked = unlocked and recorded is not None and recorded["status"] == "GO"
+            invalidation = None
+            if state == "GO":
+                references = [evidence.get(identifier) for identifier in recorded["evidence_ids"]]
+                has_verified_basis = any(
+                    item is not None
+                    and item["verification_status"] == "VERIFIED"
+                    and item["evidence_class"] in ("DOCUMENTED", "MEASURED")
+                    for item in references
+                )
+                has_measurement = any(
+                    item is not None
+                    and item["verification_status"] == "VERIFIED"
+                    and item["evidence_class"] == "MEASURED"
+                    for item in references
+                )
+                if (recorded["decision_id"] in invalidations or not has_verified_basis
+                        or (stage in ("VALIDATE", "MEASURE_IMPROVE") and not has_measurement)):
+                    state = "REWORK"
+                    invalidation = "The recorded approval lost its supporting evidence; a new human decision is required."
+            states.append({
+                "stage": stage,
+                "status": state,
+                "decision": recorded if unlocked else None,
+                "invalidation_reason": invalidation,
+            })
+            unlocked = state == "GO"
         return states
 
     def evidence(self, evidence_id: str) -> dict | None:
@@ -253,14 +299,29 @@ class StudioStore:
 
     def review_evidence(self, evidence_id: str, status: str, reviewer: str, rationale: str) -> dict:
         with self.connection() as conn:
+            review_id = f"er-{uuid4().hex[:12]}"
+            case_id = conn.execute(
+                "SELECT case_id FROM evidence WHERE evidence_id=?", (evidence_id,)
+            ).fetchone()[0]
             conn.execute(
                 "UPDATE evidence SET verification_status=? WHERE evidence_id=?",
                 (status, evidence_id),
             )
             conn.execute(
                 "INSERT INTO evidence_reviews VALUES (?, ?, ?, ?, ?, ?)",
-                (f"er-{uuid4().hex[:12]}", evidence_id, status, reviewer, rationale, utc_now()),
+                (review_id, evidence_id, status, reviewer, rationale, utc_now()),
             )
+            if status == "REJECTED":
+                prior_go = conn.execute(
+                    "SELECT decision_id, evidence_ids_json FROM decisions WHERE case_id=? AND status='GO'",
+                    (case_id,),
+                ).fetchall()
+                for decision in prior_go:
+                    if evidence_id in json.loads(decision["evidence_ids_json"]):
+                        conn.execute(
+                            "INSERT INTO decision_invalidations VALUES (?, ?, ?, ?, ?)",
+                            (f"di-{uuid4().hex[:12]}", decision["decision_id"], evidence_id, review_id, utc_now()),
+                        )
         return self.evidence(evidence_id) or {}
 
     def add_decision(self, case_id: str, stage: str, status: str, owner: str,

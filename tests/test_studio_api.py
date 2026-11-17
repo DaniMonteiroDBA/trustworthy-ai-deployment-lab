@@ -105,6 +105,32 @@ class StudioAPITests(unittest.TestCase):
         record = self.case()
         self.assertEqual(record["stage_states"][1]["status"], "LOCKED")
 
+    def test_revoked_evidence_invalidates_go_without_rewriting_decision(self):
+        self.verify_document()
+        self.assertEqual(self.new_decision(stage="DISCOVER").status_code, 201)
+        self.assertEqual(self.new_decision(stage="ASSESS").status_code, 201)
+        response = self.client.post("/api/evidence/e-sim-002/review", json={
+            "status": "REJECTED", "reviewer": "Fictional reviewer",
+            "rationale": "Synthetic source is no longer considered reliable.",
+        })
+        self.assertEqual(response.status_code, 200)
+        record = self.case()
+        self.assertEqual(record["stage_states"][0]["status"], "REWORK")
+        self.assertEqual(record["stage_states"][0]["decision"]["status"], "GO")
+        self.assertTrue(record["stage_states"][0]["invalidation_reason"])
+        self.assertEqual(record["stage_states"][1]["status"], "LOCKED")
+        self.assertEqual(self.new_decision(stage="ASSESS", status="HOLD").status_code, 409)
+        report = self.client.get(f"/api/cases/{self.case_id}/executive-report").text
+        self.assertIn("DISCOVER — REWORK", report)
+        self.assertIn("Recorded decision:** GO", report)
+        self.verify_document()
+        self.assertEqual(self.case()["stage_states"][0]["status"], "REWORK")
+        self.assertEqual(self.new_decision(stage="DISCOVER").status_code, 201)
+        self.assertEqual(self.case()["stage_states"][0]["status"], "GO")
+        self.assertEqual(self.case()["stage_states"][1]["status"], "REWORK")
+        self.assertEqual(self.new_decision(stage="ASSESS").status_code, 201)
+        self.assertEqual(self.case()["stage_states"][1]["status"], "GO")
+
     def test_executive_report_is_honest_about_synthetic_data(self):
         response = self.client.get(f"/api/cases/{self.case_id}/executive-report")
         self.assertEqual(response.status_code, 200)

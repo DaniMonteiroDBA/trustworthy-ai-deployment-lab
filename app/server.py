@@ -52,7 +52,7 @@ def _clean_list(items: list[str]) -> list[str]:
 def make_executive_report(record: dict) -> str:
     """Render a transparent deterministic report, not an LLM summary."""
     evidence = {e["evidence_id"]: e for e in record["evidence"]}
-    latest = {row["stage"]: row["decision"] for row in record["stage_states"] if row["decision"]}
+    states = {row["stage"]: row for row in record["stage_states"]}
     lines = [
         f"# {record['client_name']} — AI Opportunity Brief",
         "",
@@ -74,17 +74,21 @@ def make_executive_report(record: dict) -> str:
         "",
     ]
     for stage in STAGES:
-        decision = latest.get(stage)
+        state = states[stage]
+        decision = state["decision"]
         if decision is None:
-            lines.extend([f"### {stage} — NOT APPROVED", "", "No effective human review decision is available.", ""])
+            lines.extend([f"### {stage} — {state['status']}", "", "No effective human review decision is available.", ""])
             continue
         lines.extend([
-            f"### {stage} — {decision['status']}", "",
+            f"### {stage} — {state['status']}", "",
+            f"**Recorded decision:** {decision['status']}",
             f"**Reviewer name (unverified, demo only):** {decision['owner']}",
             f"**Rationale:** {decision['rationale']}",
             f"**Open blockers:** {', '.join(decision['blockers']) or 'None recorded'}",
             "",
         ])
+        if state["invalidation_reason"]:
+            lines.extend([f"**Evidence invalidation:** {state['invalidation_reason']}", ""])
         for identifier in decision["evidence_ids"]:
             item = evidence.get(identifier)
             if item:

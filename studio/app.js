@@ -102,7 +102,7 @@
     $("stage-question").textContent = stage.question;
     $("stage-requirements").innerHTML = stage.requirements.map(req => `<li>${escape(req)}</li>`).join("");
     const d = current.decision;
-    $("latest-decision").innerHTML = d ? `<strong>${escape(d.status.replaceAll("_"," "))}</strong> · ${escape(d.owner)}<br>${escape(d.rationale)}<br><small>${escape(d.blockers.length ? "Open blockers: " + d.blockers.join("; ") : "No blockers recorded")}</small>` :
+    $("latest-decision").innerHTML = d ? `<strong>${escape(current.status.replaceAll("_"," "))}</strong> · Recorded ${escape(d.status.replaceAll("_"," "))} by ${escape(d.owner)}<br>${escape(d.rationale)}<br>${current.invalidation_reason ? `<strong class="evidence-alert">${escape(current.invalidation_reason)}</strong><br>` : ""}<small>${escape(d.blockers.length ? "Open blockers: " + d.blockers.join("; ") : "No blockers recorded")}</small>` :
       current.status === "LOCKED" ? "This stage is locked until the previous gate is approved." : "No review decision recorded for this stage.";
     $("decision-button").disabled = current.status === "LOCKED";
     $("decision-button").textContent = current.status === "LOCKED" ? "Previous decision required" : "Record a review decision →";

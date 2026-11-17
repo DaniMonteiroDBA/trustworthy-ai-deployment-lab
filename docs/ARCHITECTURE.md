@@ -34,6 +34,7 @@ The stage order is `DISCOVER`, `ASSESS`, `PRIORITIZE`, `ARCHITECT`, `VALIDATE`, 
 
 - A stage is unlocked only when all preceding gates have an effective `GO`.
 - Review decisions are appended; prior records remain visible in `decisions` history.
+- Rejecting cited evidence appends a durable `decision_invalidations` record for each affected `GO`. Even if evidence is later verified again, the recorded approval cannot silently reactivate: a new human review must be entered. Effective status becomes `REWORK` while the original `GO` remains in audit history.
 - If an earlier stage loses `GO`, downstream stage approvals are **effectively locked** until the dependency is restored.
 - A `GO` cannot cite evidence from another use case, bypass unresolved blockers, or rely solely on unverified/inferred material.
 - `VALIDATE` and `MEASURE_IMPROVE` cannot receive `GO` until actual measured evidence is ingested by a future trusted integration.

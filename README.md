@@ -42,7 +42,7 @@ python -m uvicorn app.server:app --host 127.0.0.1 --port 8000
 
 Open **http://127.0.0.1:8000** for the Studio or **http://127.0.0.1:8000/docs** for the FastAPI API reference.
 
-The app initializes a local SQLite database in `data/studio.db` (excluded from Git) with three fictional clients. It allows a demo reviewer to add **unverified** synthetic evidence, record a simulated review, make bounded stage decisions, and download a deterministic executive brief. It rejects evidence references from other use cases and prevents approval without verified evidence or while blockers remain. The validation and improvement stages cannot pass without measured evidence from a future evaluation engine.
+The app initializes a local SQLite database in `data/studio.db` (excluded from Git) with three fictional clients. It allows a demo reviewer to add **unverified** synthetic evidence, record a simulated review, make bounded stage decisions, and download a deterministic executive brief. It rejects evidence references from other use cases and prevents approval without verified evidence or while blockers remain. If cited evidence is rejected after approval, the previous `GO` becomes ineffective and downstream stages lock; a later re-verification cannot reactivate it without a new human review. The validation and improvement stages cannot pass without measured evidence from a future evaluation engine.
 
 ```bash
 python -m unittest discover -s tests -v
