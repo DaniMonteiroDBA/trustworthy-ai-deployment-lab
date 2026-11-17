@@ -1,8 +1,7 @@
 name: Contract checks
 
 on:
-  push:
-  pull_request:
+  # Temporarily paused: re-enable push and pull_request after billing is resolved.
   workflow_dispatch:
 
 permissions:
