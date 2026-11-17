@@ -12,7 +12,7 @@
     {id:"MEASURE_IMPROVE",name:"Improve",question:"Is value sustained, and what must change next?",description:"Compare operational evidence to business outcomes and revise investment decisions.",requirements:["Observed outcomes and usage against baselines", "User feedback and incident trends", "Review and improvement cadence"]}
   ];
 
-  const state = { clients: [], client: null, record: null, stageIndex: 0, reportText: "" };
+  const state = { clients: [], client: null, record: null, stageIndex: 0, reportText: "", adoption: null };
   const $ = id => document.getElementById(id);
   const escape = value => String(value ?? "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
   const listLines = text => String(text || "").split("\n").map(s => s.trim()).filter(Boolean);
@@ -83,6 +83,7 @@
     $("non-ai-alternative").textContent = record.non_ai_alternative;
     renderStages();
     renderEvidence();
+    if (state.adoption) renderAdoption(state.adoption);
   }
 
   function renderStages() {
@@ -129,6 +130,26 @@
       return `<article class="evaluation-scorecard"><span class="eyebrow muted">${escape(system.provider.replaceAll("_"," "))}</span><div class="evaluation-score">${escape(s.passed)} <small>/ ${escape(s.total)}</small></div><p>${escape(s.failed)} heuristic check(s) failed · ${escape(s.critical_failures.length)} critical failures</p><details><summary>Inspect failures and limitations</summary>${failures ? `<ul>${failures}</ul>` : '<p>No failures in this small synthetic fixture set. This is not independent validation.</p>'}</details></article>`;
     }).join("");
     target.innerHTML = `<div class="evaluation-meta"><span>DATASET ${escape(run.dataset.version)}</span><span>CRITERIA ${escape(run.criteria_status)}</span><span>GATE ${escape(run.release_decision)}</span></div><div class="evaluation-grid">${cards}</div><p class="mini-disclaimer">These results are fixture-specific observations from a deterministic rules program, not model performance, real-world impact, or an enterprise release authorization.</p>`;
+  }
+
+  function renderAdoption(packet) {
+    const target = $("adoption-results");
+    if (!packet || !packet.synthetic || !Array.isArray(packet.recommendations)) {
+      target.innerHTML = '<div class="empty-state">No synthetic decision scenarios are available.</div>';
+      return;
+    }
+    target.innerHTML = `<div class="adoption-grid">${packet.recommendations.map(rec => {
+      const sameClient = state.client?.client_id === rec.client_id;
+      const shortReasons = rec.reasons.length ? rec.reasons.slice(0, 3).map(r => `<li><strong>${escape(r.dimension || r.code)}</strong> · ${escape(r.detail)}</li>`).join("") : "<li>Every fictional risk-profile criterion passed. Real evidence and human authorization remain missing.</li>";
+      const allReasons = rec.reasons.length ? rec.reasons.map(r => `<li><strong>${escape(r.code)}</strong> · ${escape(r.detail)}<small>Next: ${escape(r.next_action)}</small></li>`).join("") : "<li>No blockers in this constructed scenario.</li>";
+      return `<article class="adoption-card ${sameClient ? "highlight" : ""}">
+          <div class="adoption-top"><span class="eyebrow muted">${escape(rec.risk_tier)} RISK · FICTIONAL</span><span class="adoption-state ${escape(rec.recommended_state.toLowerCase().replaceAll("_", "-"))}">${escape(rec.recommended_state.replaceAll("_", " "))}</span></div>
+          <h4>${escape(rec.title)}</h4><p>${escape(rec.rationale)}</p>
+          <ul class="adoption-reasons">${shortReasons}</ul>
+          <details><summary>Evidence gaps and actions (${escape(rec.reasons.length)})</summary><ul class="adoption-reasons detail">${allReasons}</ul></details>
+          <div class="adoption-foot">${escape(rec.mandatory_dimensions.length)} risk-profile checks · Approval: NOT RECORDED</div>
+        </article>`;
+    }).join("")}</div><p class="mini-disclaimer">Illustrative verified flags and measurements are deliberately fabricated for teaching. Even an advisory GO is never an actual authorization, and these scenarios do not react to changes in the editable local client records.</p>`;
   }
 
   async function runEvaluation() {
@@ -225,6 +246,8 @@
       state.clients = await api("/api/clients");
       if (!state.clients.length) throw new Error("No synthetic clients are available.");
       await selectClient(state.clients[0].client_id);
+      try { state.adoption = await api("/api/adoption/scenarios"); renderAdoption(state.adoption); }
+      catch(error) { $("adoption-results").textContent = `Could not load simulated recommendations: ${error.message}`; }
       try { renderEvaluation(await api("/api/evaluations/latest")); } catch(_) { /* fresh local database */ }
     } catch(error) {toast(`Could not load the Studio: ${error.message}`, true);}
   }

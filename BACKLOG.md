@@ -24,6 +24,7 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 - [x] Build the first local Adoption Studio: client, case, evidence, decision, blockers and status.
 - [x] Implement an append-only decision history, review records and stage unlock rules.
 - [x] Generate deterministic synthetic executive opportunity briefs.
+- [x] Expose read-only, risk-aware recommendations for four explicitly fictional validation-to-adoption scenarios without changing decision records.
 - [ ] Add role-based access design, privacy inventory and threat boundaries.
 - [ ] Produce the complete technical account plan and interview templates.
 
@@ -48,12 +49,16 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 - [x] Require explicit 1–5 case limit for an opt-in billed run and stop remaining candidate requests on first provider error; **this is not a dollar budget cap**.
 - [ ] Measure live AI task quality and approved cost; offline runtime/heuristic scores and version provenance are implemented.
 - [ ] Obtain two actually independent reviewer judgments, adjudicate label disputes, and calibrate automated scoring using held-out cases.
+- [x] Implement an evidence-linked, non-scored **VALIDATE → ADOPT** advisory policy with risk-specific mandatory checks and separate `NO_GO`, `HOLD`, `REWORK`, `GO` precedence.
+- [ ] Extend the advisory contract to other stage transitions and design authenticated stakeholder adjudication; do not automatically approve any gate.
 - [ ] Add GitHub Actions quality and security checks with release blockers.
 - [ ] Document production-readiness gaps, rollback procedure and incident responsibilities.
 
 **Acceptance:** at least one reproducible evaluation run includes failures and limitations; critical authorization regressions block release.
 
 **Current evidence:** `python -m evals.run` creates a local, versioned offline artifact; the Studio exposes the same synthetic run. `python -m evals.review prepare` produces **unreviewed** worksheets; `summarize` checks self-attested reviews without granting release authority. The OpenAI Responses adapter has a mocked test and is never called by default. CI runner allocation is tracked in [issue #6](https://github.com/DaniMonteiroDBA/trustworthy-ai-deployment-lab/issues/6).
+
+**New adoption evidence:** `python -m adoption.run` produces traceable, versioned **fictional advisory** results only. The four cases exercise all four policy states; the example `GO` is based on invented verification and always has `release_authorized=false`. No real institution has been assessed.
 
 ## P4 — Adoption and external demonstration
 

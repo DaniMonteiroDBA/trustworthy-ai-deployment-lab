@@ -7,5 +7,6 @@ __pycache__/
 data/
 evals/runs/
 evals/reviews/
+adoption/runs/
 .pytest_cache/
 .DS_Store

@@ -27,6 +27,8 @@ Evidence is **contextual**: a simple internal draft assistant and a financial de
 
 Model outputs may recommend a state, but **only a designated human owner** records the authoritative decision.
 
+**Executable reference slice:** the [Adoption Decision Engine](ADOPTION_DECISION_ENGINE.md) now recommends one of these states for the `VALIDATE → ADOPT` transition using eight evidence dimensions, an additional independent-review criterion for high-risk cases, and explicit blocker precedence. Its four example results are synthetic and **cannot become authorized stage approvals**. The other stage-transition policies remain conceptual.
+
 ## Evidence strength and provenance
 
 Do not equate evidence type with truth:

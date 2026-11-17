@@ -16,6 +16,7 @@ from fastapi.responses import FileResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
+from adoption.run import run as run_adoption_scenarios
 from app.store import STAGES, StudioStore
 from evals.engine import CORPUS_PATH, DATASET_PATH, SafeRuleCandidate, digest, execute, load_fixtures
 
@@ -124,6 +125,18 @@ def create_app(database_path: Path | str | None = None) -> FastAPI:
     @application.get("/api/clients")
     def clients() -> list[dict]:
         return store.clients()
+
+    @application.get("/api/adoption/scenarios")
+    def adoption_scenarios() -> dict:
+        # Frozen, versioned training fixtures, NOT conclusions about mutable demo records.
+        return run_adoption_scenarios()
+
+    @application.get("/api/adoption/scenarios/{scenario_id}")
+    def adoption_scenario(scenario_id: str) -> dict:
+        try:
+            return run_adoption_scenarios(scenario_id)
+        except ValueError:
+            raise HTTPException(404, "Fictional adoption scenario not found") from None
 
     @application.get("/api/evaluations/latest")
     def last_evaluation() -> dict:

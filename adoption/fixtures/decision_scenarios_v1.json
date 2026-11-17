@@ -1,0 +1,113 @@
+{
+  "version": "1.0",
+  "synthetic": true,
+  "purpose": "Illustrate policy recommendations, NOT verified business or deployment decisions.",
+  "scenarios": [
+    {
+      "scenario_id": "fintrust-hold",
+      "title": "FinTrust — unresolved authorization and model evidence",
+      "client_id": "fintrust-demo", "case_id": "fintrust-policy-action", "risk_tier": "HIGH", "synthetic": true,
+      "accountable_owner": "Fictional procurement sponsor",
+      "non_ai_alternative": "Maintain human-controlled policy search and decision tree",
+      "evidence": [
+        {"id":"ft-scope","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Fictional discovery and options worksheet"},
+        {"id":"ft-design","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Fictional data and control architecture note"},
+        {"id":"ft-risk","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Fictional threat checklist"},
+        {"id":"ft-eval","kind":"MEASURED","verification":"UNVERIFIED","synthetic":true,"source":"Offline handcrafted rules fixture; not a live model benchmark"},
+        {"id":"ft-cost","kind":"MEASURED","verification":"UNVERIFIED","synthetic":true,"source":"Budget placeholder; no observed model price or spend"}
+      ],
+      "checks": [
+        {"dimension":"BUSINESS_VALUE","status":"PASS","evidence_ids":["ft-scope"],"rationale":"Fictional problem and intended success criterion recorded.","next_action":"Have a real sponsor confirm benefit and baseline"},
+        {"dimension":"NON_AI_ALTERNATIVE","status":"PASS","evidence_ids":["ft-scope"],"rationale":"Human policy search is recorded as a comparator.","next_action":"Validate its practical cost and quality"},
+        {"dimension":"DATA_GOVERNANCE","status":"PASS","evidence_ids":["ft-design"],"rationale":"Synthetic data boundary and source ownership are described.","next_action":"Obtain customer permission before using private data"},
+        {"dimension":"AI_EVALUATION","status":"UNKNOWN","evidence_ids":["ft-eval"],"rationale":"No real model quality or independently reviewed result exists.","next_action":"Review held-out cases and evaluate an authorized real model"},
+        {"dimension":"SECURITY_PRIVACY","status":"PASS","evidence_ids":["ft-risk"],"rationale":"Illustrative trust boundaries are documented, not deployed.","next_action":"Verify actual IAM and privacy controls in approved environment"},
+        {"dimension":"ECONOMICS","status":"UNKNOWN","evidence_ids":["ft-cost"],"rationale":"No approved measured cost or bounded financial case exists.","next_action":"Establish approved price inputs, costs and limits"},
+        {"dimension":"OPERATIONS","status":"GAP","evidence_ids":["ft-design"],"rationale":"Incident owner and tested rollback are absent.","next_action":"Draft and test an incident and rollback plan"},
+        {"dimension":"HUMAN_ACCOUNTABILITY","status":"PASS","evidence_ids":["ft-scope"],"rationale":"A fictional business decision owner is named.","next_action":"Verify real accountable identities and roles"},
+        {"dimension":"INDEPENDENT_REVIEW","status":"UNKNOWN","evidence_ids":["ft-eval"],"rationale":"No human judgments have been independently submitted.","next_action":"Conduct blinded human evaluation and adjudication"}
+      ],
+      "blockers": [
+        {"id":"ft-permissions","severity":"AUTHORIZATION","status":"OPEN","summary":"Data-use and organizational approval have not been obtained.","next_action":"Obtain explicit sponsor, data, security and IP authorization"}
+      ]
+    },
+    {
+      "scenario_id": "retailflow-rework",
+      "title": "RetailFlow — correctable economics gap",
+      "client_id": "retailflow-demo", "case_id": "retailflow-discrepancy", "risk_tier": "MEDIUM", "synthetic": true,
+      "accountable_owner": "Fictional operations director",
+      "non_ai_alternative": "Rule-based exception dashboard and analyst triage",
+      "evidence": [
+        {"id":"rf-brief","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Imaginary business brief and option comparison"},
+        {"id":"rf-controls","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Imaginary dataset, risk and owner checklist"},
+        {"id":"rf-eval","kind":"MEASURED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Invented training-only evaluation record, not a measured project outcome"},
+        {"id":"rf-cost","kind":"MEASURED","verification":"UNVERIFIED","synthetic":true,"source":"Illustrative unconfirmed operating-cost estimate"}
+      ],
+      "checks": [
+        {"dimension":"BUSINESS_VALUE","status":"PASS","evidence_ids":["rf-brief"],"rationale":"Business objective exists inside the fictional brief.","next_action":"Validate baseline with a real operator"},
+        {"dimension":"NON_AI_ALTERNATIVE","status":"PASS","evidence_ids":["rf-brief"],"rationale":"Analyst dashboard is an explicit comparator.","next_action":"Compare benefits with current process"},
+        {"dimension":"DATA_GOVERNANCE","status":"PASS","evidence_ids":["rf-controls"],"rationale":"Synthetic records have a hypothetical permitted source.","next_action":"Revalidate actual data permissions"},
+        {"dimension":"AI_EVALUATION","status":"PASS","evidence_ids":["rf-eval"],"rationale":"Only a simulated test example is asserted to pass.","next_action":"Repeat with held-out real-run measurements"},
+        {"dimension":"SECURITY_PRIVACY","status":"PASS","evidence_ids":["rf-controls"],"rationale":"Simulated risk and privacy checks are listed.","next_action":"Test security before deployment"},
+        {"dimension":"ECONOMICS","status":"GAP","evidence_ids":["rf-cost"],"rationale":"The comparative running cost has not been measured.","next_action":"Measure cost per useful output and compare with non-AI option"},
+        {"dimension":"OPERATIONS","status":"PASS","evidence_ids":["rf-controls"],"rationale":"Fictional escalation and support owners are specified.","next_action":"Exercise an incident in a safe test environment"},
+        {"dimension":"HUMAN_ACCOUNTABILITY","status":"PASS","evidence_ids":["rf-controls"],"rationale":"Fictional decision owner and escalation path identified.","next_action":"Authenticate decision makers in a real pilot"}
+      ],
+      "blockers": []
+    },
+    {
+      "scenario_id": "civicdata-no-go",
+      "title": "CivicData — unacceptable source permission failure",
+      "client_id": "civicdata-demo", "case_id": "civicdata-policy", "risk_tier": "HIGH", "synthetic": true,
+      "accountable_owner": "Fictional public service manager",
+      "non_ai_alternative": "Curated document search and supervised human service",
+      "evidence": [
+        {"id":"cd-brief","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Fabricated public-service options brief"},
+        {"id":"cd-checks","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Fabricated review and operations dossier"},
+        {"id":"cd-eval","kind":"MEASURED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Entirely invented model-check demonstration"},
+        {"id":"cd-cost","kind":"MEASURED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Entirely invented economics demonstration"},
+        {"id":"cd-rights","kind":"DOCUMENTED","verification":"REJECTED","synthetic":true,"source":"Fictional permission document explicitly rejected"}
+      ],
+      "checks": [
+        {"dimension":"BUSINESS_VALUE","status":"PASS","evidence_ids":["cd-brief"],"rationale":"Fictional service need is described for comparison.","next_action":"Obtain actual service-owner validation"},
+        {"dimension":"NON_AI_ALTERNATIVE","status":"PASS","evidence_ids":["cd-brief"],"rationale":"Supervised human service remains available.","next_action":"Maintain human service while blocked"},
+        {"dimension":"DATA_GOVERNANCE","status":"FAIL","evidence_ids":["cd-rights"],"rationale":"Permission to process the proposed records has been rejected.","next_action":"Stop this proposed data path and redesign lawfully"},
+        {"dimension":"AI_EVALUATION","status":"PASS","evidence_ids":["cd-eval"],"rationale":"Hypothetical test result exists but cannot overcome denied data access.","next_action":"Do not use a good metric to bypass authorization"},
+        {"dimension":"SECURITY_PRIVACY","status":"FAIL","evidence_ids":["cd-rights"],"rationale":"Required processing authorization is absent.","next_action":"Use a lawful, separately reviewed alternative"},
+        {"dimension":"ECONOMICS","status":"PASS","evidence_ids":["cd-cost"],"rationale":"Invented economic example cannot legitimize a blocked design.","next_action":"Revisit economics only after lawful redesign"},
+        {"dimension":"OPERATIONS","status":"PASS","evidence_ids":["cd-checks"],"rationale":"Fictional incident response path is documented.","next_action":"Test procedures after redesign"},
+        {"dimension":"HUMAN_ACCOUNTABILITY","status":"PASS","evidence_ids":["cd-checks"],"rationale":"Hypothetical accountable roles are named.","next_action":"Verify human roles before any actual use"},
+        {"dimension":"INDEPENDENT_REVIEW","status":"PASS","evidence_ids":["cd-checks"],"rationale":"Fictional external review paper is included only for illustration.","next_action":"Conduct genuine review if a lawful project proceeds"}
+      ],
+      "blockers": [
+        {"id":"cd-illegal-data","severity":"TERMINAL","status":"OPEN","summary":"Proposed source has no approved processing permission in this fictional case.","next_action":"Reject the proposed path; return to data and purpose design"}
+      ]
+    },
+    {
+      "scenario_id": "fintrust-ideal-go",
+      "title": "FinTrust — hypothetical ideal GO candidate (never approved)",
+      "client_id": "fintrust-demo", "case_id": "fintrust-policy-action", "risk_tier": "HIGH", "synthetic": true,
+      "accountable_owner": "Fictional procurement sponsor",
+      "non_ai_alternative": "Documented human policy portal and approval queue",
+      "evidence": [
+        {"id":"ft-ideal-brief","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Invented comprehensive value and alternative dossier"},
+        {"id":"ft-ideal-risk","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Invented governance, risk, operational and owner dossier"},
+        {"id":"ft-ideal-human","kind":"DOCUMENTED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Invented independent-review simulation, no human actually reviewed"},
+        {"id":"ft-ideal-eval","kind":"MEASURED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Fabricated future model measurement for demonstrating policy logic"},
+        {"id":"ft-ideal-cost","kind":"MEASURED","verification":"SIMULATED_VERIFIED","synthetic":true,"source":"Fabricated future cost measurement for demonstrating policy logic"}
+      ],
+      "checks": [
+        {"dimension":"BUSINESS_VALUE","status":"PASS","evidence_ids":["ft-ideal-brief"],"rationale":"Imagined owner confirms meaningful process improvement.","next_action":"Obtain real baseline and benefit observations"},
+        {"dimension":"NON_AI_ALTERNATIVE","status":"PASS","evidence_ids":["ft-ideal-brief"],"rationale":"Hypothetical comparison includes no-AI alternative.","next_action":"Re-run comparative analysis with actual users"},
+        {"dimension":"DATA_GOVERNANCE","status":"PASS","evidence_ids":["ft-ideal-risk"],"rationale":"All hypothetical data rights are documented as simulated.","next_action":"Verify ownership and actual permissions"},
+        {"dimension":"AI_EVALUATION","status":"PASS","evidence_ids":["ft-ideal-eval"],"rationale":"Invented measurement demonstrates gate logic, not model performance.","next_action":"Run an actual authorized model evaluation"},
+        {"dimension":"SECURITY_PRIVACY","status":"PASS","evidence_ids":["ft-ideal-risk"],"rationale":"Assumed controls are in place solely for this fictional case.","next_action":"Threat model and test controls in a real environment"},
+        {"dimension":"ECONOMICS","status":"PASS","evidence_ids":["ft-ideal-cost"],"rationale":"Invented measured costs satisfy the simulated contract only.","next_action":"Establish a genuine pricing and budget record"},
+        {"dimension":"OPERATIONS","status":"PASS","evidence_ids":["ft-ideal-risk"],"rationale":"Imaginary rollback and incident owners are available.","next_action":"Verify readiness through operational exercise"},
+        {"dimension":"HUMAN_ACCOUNTABILITY","status":"PASS","evidence_ids":["ft-ideal-risk"],"rationale":"An example human sponsor is identified but not authenticated.","next_action":"Obtain a genuine named owner and authorization"},
+        {"dimension":"INDEPENDENT_REVIEW","status":"PASS","evidence_ids":["ft-ideal-human"],"rationale":"This is an invented review for demonstrating advisory logic only.","next_action":"Perform actual independent and documented review"}
+      ],
+      "blockers": []
+    }
+  ]
+}
