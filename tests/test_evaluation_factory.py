@@ -110,8 +110,35 @@ class EvaluationFactoryTests(unittest.TestCase):
         self.assertIn("--allow-billed-api", str(blocked.exception))
         with patch.dict(os.environ, {}, clear=True):
             with self.assertRaises(SystemExit) as absent:
-                main(["--candidate", "openai", "--model", "fictional-model", "--allow-billed-api"])
+                main(["--candidate", "openai", "--model", "fictional-model", "--allow-billed-api", "--max-cases", "1"])
             self.assertIn("OPENAI_API_KEY", str(absent.exception))
+
+    def test_live_request_volume_guard_rejects_missing_or_excessive_case_limit(self):
+        for extra in ([], ["--max-cases", "6"]):
+            with self.subTest(extra=extra):
+                with patch.dict(os.environ, {"OPENAI_API_KEY": "fake-test-only"}):
+                    with self.assertRaises(SystemExit) as blocked:
+                        main(["--candidate", "openai", "--model", "fictional-model", "--allow-billed-api", *extra])
+                    self.assertIn("not a USD cap", str(blocked.exception))
+
+    def test_live_candidate_failure_stops_after_one_case_without_exposing_error(self):
+        class Broken:
+            name = "mock-failing-live-provider"
+            model = "fictional-model"
+            calls = 0
+
+            def predict(self, *_):
+                self.calls += 1
+                raise RuntimeError("never-publish-upstream-secret")
+
+        broken = Broken()
+        report = execute(self.dataset, self.corpus, broken, limit=5, stop_candidate_on_error=True)
+        system = report["systems"][-1]
+        self.assertEqual(broken.calls, 1)
+        self.assertEqual(system["planned_cases"], 5)
+        self.assertEqual(system["summary"]["total"], 1)
+        self.assertTrue(system["interrupted_on_error"])
+        self.assertNotIn("never-publish", json.dumps(report))
 
     def test_openai_provider_sends_only_current_tenant_documents_and_no_storage(self):
         class FakeResponses:

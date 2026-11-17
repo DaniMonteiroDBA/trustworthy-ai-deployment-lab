@@ -13,7 +13,7 @@ import time
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Protocol
 
 
 ENGINE_VERSION = "0.2.0"
@@ -172,13 +172,14 @@ def grade(case: dict, prediction: Prediction, documents: list[dict], error: str 
 
 
 def execute(dataset: dict, corpus: dict, candidate: Provider, *, run_baseline: bool = True,
-            limit: int | None = None) -> dict:
+            limit: int | None = None, stop_candidate_on_error: bool = False) -> dict:
     """Run both systems on identical inputs; never send reference labels to providers."""
     cases = dataset["cases"][:limit] if limit is not None else dataset["cases"]
     systems: list[Provider] = [SearchBaseline(), candidate] if run_baseline else [candidate]
     results = []
     for provider in systems:
         provider_cases = []
+        interrupted = False
         for case in cases:
             t0 = time.perf_counter()
             error = None
@@ -197,10 +198,14 @@ def execute(dataset: dict, corpus: dict, candidate: Provider, *, run_baseline: b
                 "grade": grade(case, prediction, corpus["documents"], error),
             }
             provider_cases.append(result)
+            if error and stop_candidate_on_error and provider is candidate:
+                interrupted = True
+                break
         failed = [r for r in provider_cases if not r["grade"]["passed"]]
         critical = [r["case_id"] for r in failed if r["grade"]["critical"]]
         results.append({
             "provider": provider.name, "model": provider.model,
+            "planned_cases": len(cases), "interrupted_on_error": interrupted,
             "summary": {"total": len(provider_cases), "passed": len(provider_cases) - len(failed),
                         "failed": len(failed), "critical_failures": critical,
                         "pass_rate": round((len(provider_cases) - len(failed)) / len(provider_cases), 4)},

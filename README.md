@@ -2,7 +2,7 @@
 
 **From enterprise AI opportunity to trustworthy deployment and measurable adoption.**
 
-> **Project status — M1 local Studio and M2 offline Evaluation Factory implemented.** The evidence-first method, synthetic-client Studio, SQLite API, deterministic reports, versioned evaluation fixtures, a non-AI baseline, a deterministic safety candidate, and automated local tests are available. An opt-in OpenAI Responses adapter is implemented and **mock-tested only**. **Live model quality, authenticated users, enterprise tenant security, cloud deployment, and customer adoption are NOT validated.**
+> **Project status — M1 local Studio, M2 offline Evaluation Factory, and the first M3 review tools implemented.** The evidence-first method, synthetic-client Studio, SQLite API, deterministic reports, versioned evaluation fixtures, a non-AI baseline, a deterministic safety candidate, and automated local tests are available. An opt-in OpenAI Responses adapter is implemented and **mock-tested only**. The review CLI creates blank human-review worksheets and compares supplied decisions; **no real human calibration has occurred**. **Live model quality, authenticated users, enterprise tenant security, cloud deployment, and customer adoption are NOT validated.**
 
 **Maintainer:** [Dani Monteiro](https://www.linkedin.com/in/danimonteirodba/) · [Portfolio](https://danimonteiro.tech/)
 
@@ -27,7 +27,7 @@ The lab has three connected design components:
 
 The methodology is intended to be adaptable across organizations and technology providers. The technical reference case will demonstrate OpenAI integration without implying that all customers must adopt the same platform.
 
-**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Evaluation Factory](docs/EVALUATION_FACTORY.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
+**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Evaluation Factory](docs/EVALUATION_FACTORY.md) · [Human Review Protocol](docs/HUMAN_REVIEW_PROTOCOL.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
 
 ## Run the local AI Value & Adoption Studio
 
@@ -62,6 +62,31 @@ python -m evals.run --candidate openai --model YOUR_APPROVED_MODEL_ID --allow-bi
 ```
 
 Set `OPENAI_API_KEY` in your environment beforehand. This command may incur charges. Review [evaluation design, evidence classes, and limitations](docs/EVALUATION_FACTORY.md) before use.
+
+An optional model run now requires an explicit limit of **1–5 cases**, and stops on its first model-provider error. This limits requests but **does not enforce a dollar budget**. No live model calls have been made for this project.
+
+## Review evaluation results with people
+
+After producing a versioned **synthetic** run, generate a blank worksheet. This does not simulate or claim that a reviewer has assessed any answer:
+
+```bash
+python -m evals.review prepare \
+  --run evals/runs/latest.json \
+  --reviewer-id reviewer-a \
+  --output evals/reviews/reviewer-a.json
+```
+
+A second person can create their own worksheet with a distinct reviewer ID. After both **actually review each case** and supply supported judgments and rationales, compare the two:
+
+```bash
+python -m evals.review summarize \
+  --run evals/runs/latest.json \
+  --review evals/reviews/reviewer-a.json \
+  --review evals/reviews/reviewer-b.json \
+  --output evals/reviews/calibration-summary.json
+```
+
+The report lists reviewer agreement, disagreements with the heuristic, and any contested expected labels or critical failures. Names are **self-declared, not authenticated**. No score or review report approves production release. See the [rubric and adjudication protocol](docs/HUMAN_REVIEW_PROTOCOL.md) for what still requires human action.
 
 ```bash
 python -m unittest discover -s tests -v

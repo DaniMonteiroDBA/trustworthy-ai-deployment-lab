@@ -1,6 +1,6 @@
 # AI Value & Adoption Studio — M1 Architecture
 
-**Status:** local synthetic M1 demonstration and offline M2 evaluation implemented; optional OpenAI adapter is mock-tested only. Cloud deployment, authentication, enterprise authorization, live model evaluation and production security controls are **not verified**.
+**Status:** local synthetic M1 demonstration, offline M2 evaluation and first M3 reviewer worksheet/comparison tools implemented; optional OpenAI adapter is mock-tested only. Cloud deployment, authentication, genuinely independent human calibration, enterprise authorization, live model evaluation and production security controls are **not verified**.
 
 ## Architecture boundary
 
@@ -56,7 +56,8 @@ The current code implements **application-level workflow checks**, not legal aut
 - **M1 next:** review business schema and programmatic case templates; evaluate usability with a real human reviewer using only fictional data.
 - **M2 implemented portion:** versioned offline runner, separate search baseline and rules candidate, active-document/tenant-scoped retrieval, local UI summary and optional mock-tested OpenAI Responses adapter. See [Evaluation Factory](EVALUATION_FACTORY.md).
 - **M2 still pending:** authenticated users, enterprise tenant authorization and action approval machine.
-- **M3:** independent human-calibrated evals, actual live model testing and cost tracking, reviewed measured-evidence ingestion, threat model, safe telemetry and repeatable release gates.
+- **M3 implemented portion:** provenance-bound synthetic reviewer worksheets with immutable source fields, two-sheet comparison, explicit reviewer disagreements, critical-failure lists, and bounded live-run case volume (without a USD cap). See [Human Review Protocol](HUMAN_REVIEW_PROTOCOL.md).
+- **M3 pending:** actually independent human-calibrated evals, adjudication, live model testing and cost tracking, reviewed measured-evidence ingestion, threat model, safe telemetry and repeatable release gates.
 - **M4:** real deployment architecture, privacy and retention decisions, synthetic account analytics, operational readiness and handoff.
 
 See [SCOPE](../SCOPE.md), [Decision Contract](DECISION_CONTRACT.md), and [traceability](../REQUIREMENTS_TRACEABILITY.md).

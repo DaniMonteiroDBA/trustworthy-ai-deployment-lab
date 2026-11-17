@@ -44,13 +44,16 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 - [x] Define versioned **proposed** evaluation cases; independent human criteria review remains pending.
 - [x] Benchmark simple non-AI search against an **offline deterministic** safety-rules candidate; this is not an AI model benchmark.
 - [x] Execute synthetic adversarial cases for prompt injection, cross-tenant access and unauthorized action.
+- [x] Create blank, provenance-bound human review worksheets, compare two self-declared reviews, and surface label/automated-grader disagreements; **human reviews themselves remain pending**.
+- [x] Require explicit 1–5 case limit for an opt-in billed run and stop remaining candidate requests on first provider error; **this is not a dollar budget cap**.
 - [ ] Measure live AI task quality and approved cost; offline runtime/heuristic scores and version provenance are implemented.
+- [ ] Obtain two actually independent reviewer judgments, adjudicate label disputes, and calibrate automated scoring using held-out cases.
 - [ ] Add GitHub Actions quality and security checks with release blockers.
 - [ ] Document production-readiness gaps, rollback procedure and incident responsibilities.
 
 **Acceptance:** at least one reproducible evaluation run includes failures and limitations; critical authorization regressions block release.
 
-**Current evidence:** `python -m evals.run` creates a local, versioned offline artifact; the Studio exposes the same synthetic run. The OpenAI Responses adapter has a mocked test and is never called by default. CI runner allocation is tracked in [issue #6](https://github.com/DaniMonteiroDBA/trustworthy-ai-deployment-lab/issues/6).
+**Current evidence:** `python -m evals.run` creates a local, versioned offline artifact; the Studio exposes the same synthetic run. `python -m evals.review prepare` produces **unreviewed** worksheets; `summarize` checks self-attested reviews without granting release authority. The OpenAI Responses adapter has a mocked test and is never called by default. CI runner allocation is tracked in [issue #6](https://github.com/DaniMonteiroDBA/trustworthy-ai-deployment-lab/issues/6).
 
 ## P4 — Adoption and external demonstration
 

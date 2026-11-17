@@ -20,7 +20,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--candidate", choices=("rules", "openai"), default="rules")
     parser.add_argument("--model", help="Explicit OpenAI model ID, only for --candidate openai")
     parser.add_argument("--allow-billed-api", action="store_true", help="Explicit authorization for model API charges")
-    parser.add_argument("--max-cases", type=int, help="Limit evaluated cases (1-30)")
+    parser.add_argument("--max-cases", type=int, help="Limit evaluated cases (1-30 offline, required 1-5 for OpenAI)")
     parser.add_argument("--output", type=Path, default=Path("evals/runs/latest.json"), help="Local JSON run artifact")
     return parser
 
@@ -34,6 +34,8 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit("Live OpenAI evaluation requires --allow-billed-api")
         if not args.model:
             raise SystemExit("Live OpenAI evaluation requires --model MODEL_ID")
+        if args.max_cases is None or args.max_cases > 5:
+            raise SystemExit("Live OpenAI evaluation requires --max-cases between 1 and 5 to limit requests (not a USD cap)")
         if not os.environ.get("OPENAI_API_KEY"):
             raise SystemExit("OPENAI_API_KEY must be configured; never commit credentials")
         from evals.providers import OpenAIResponsesCandidate
@@ -45,7 +47,8 @@ def main(argv: list[str] | None = None) -> int:
         candidate = SafeRuleCandidate()
 
     dataset, corpus = load_fixtures()
-    result = execute(dataset, corpus, candidate, limit=args.max_cases)
+    result = execute(dataset, corpus, candidate, limit=args.max_cases,
+                     stop_candidate_on_error=args.candidate == "openai")
     result["dataset"]["sha256"] = digest(DATASET_PATH)
     result["corpus"]["sha256"] = digest(CORPUS_PATH)
     result["run_mode"] = "BILLED_API" if args.candidate == "openai" else "OFFLINE_DETERMINISTIC"

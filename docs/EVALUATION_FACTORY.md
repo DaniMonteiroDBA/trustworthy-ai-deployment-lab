@@ -1,6 +1,6 @@
-# Evaluation Factory — M2 design and observed limitations
+# Evaluation Factory — M2 runner and M3 review checkpoint
 
-**Status:** first offline evaluation vertical slice is executable and unit-tested. Live OpenAI integration is coded behind an explicit opt-in, but **no live model call has been made or validated**. No real customer data, production authorization, or user authentication exists.
+**Status:** first offline evaluation vertical slice and an unverified-identity human-review **protocol/tooling** are executable and unit-tested. Live OpenAI integration is coded behind an explicit opt-in, but **no live model call or genuine human calibration has been performed**. No real customer data, production authorization, or user authentication exists.
 
 ## Evaluation question
 
@@ -38,7 +38,23 @@ python -m pip install -r requirements-openai.txt
 python -m evals.run --candidate openai --model YOUR_APPROVED_MODEL_ID --allow-billed-api --max-cases 3
 ```
 
-The CLI refuses a paid run without both the explicit flag and an environment-provided key. No live calls are made by the web UI. The SDK uses an approximately 20-second timeout, at most two built-in retries, no persistence of Responses via API (`store=False`), and a maximum of 600 output tokens per case. Charges, rate limits, and availability depend on your account and selected model; the tool does not guess dollar costs. **Use synthetic fixtures only.**
+The CLI refuses a paid run without an explicit flag, a model ID, an environment-provided key and `--max-cases` between 1 and 5. A paid candidate run **stops on its first provider error**; the baseline still runs locally. No live calls are made by the web UI. The SDK uses an approximately 20-second timeout, at most two built-in retries, no persistence of Responses via API (`store=False`), and a maximum of 600 output tokens per case. This bounds the test request volume; **it does not enforce a monetary budget**. Charges, rate limits, and availability depend on your account and selected model; the tool does not guess dollar costs. **Use synthetic fixtures only.**
+
+## Human review: a deliberately unapproved checkpoint
+
+The `evals.review` CLI provides blank, run-bound reviewer worksheets and a comparison report. This is an **inspection protocol**, not fabricated evidence of human validation:
+
+```bash
+python -m evals.run
+python -m evals.review prepare --run evals/runs/latest.json --reviewer-id reviewer-a --output evals/reviews/reviewer-a.json
+python -m evals.review prepare --run evals/runs/latest.json --reviewer-id reviewer-b --output evals/reviews/reviewer-b.json
+# Once two actual reviewers fill in their own worksheets:
+python -m evals.review summarize --run evals/runs/latest.json \
+  --review evals/reviews/reviewer-a.json --review evals/reviews/reviewer-b.json \
+  --output evals/reviews/calibration-summary.json
+```
+
+`prepare` creates **zero prefilled human judgments**. Reviewers independently assess the reference label and candidate behavior with written reasons. The command checks exact SHA-256 run provenance, immutable source text, distinct self-declared IDs, allowed verdicts, rationale length, and full case coverage. The summary exposes reviewer agreement, rejected gold labels, automated-versus-human disagreements, and critical human failures. Even two complete worksheets cannot authenticate identities, guarantee independence, or approve a release. Consult the [full human-review rubric and limitations](HUMAN_REVIEW_PROTOCOL.md).
 
 ## What an artifact contains
 
@@ -48,6 +64,7 @@ The CLI refuses a paid run without both the explicit flag and an environment-pro
 - When supplied by the API, observed input/output token counts. Dollar cost remains `null` without a reviewed price schedule.
 - Test-specific pass/fail reasons, critical-failure IDs, observed case counts and pass rates.
 - `release_decision: HUMAN_REVIEW_REQUIRED` independent of aggregate score.
+- Explicit `planned_cases` and `interrupted_on_error` fields prevent misreading a partial paid run as a completed benchmark.
 
 No human reviewer has signed off on a release. The local heuristic grader does **not** prove semantic correctness. A model can pass the string assertions yet still be incorrect or unsafe in other ways. Error artifacts intentionally omit upstream exception messages, which may contain sensitive prompt material.
 
@@ -67,11 +84,11 @@ The offline demonstration also tests:
 
 ## Current gaps to close before a real pilot
 
-1. Independent human annotation and reviewed scoring rubric; more varied held-out and adversarial data.
+1. **Actually performed** independent human annotation, adjudication and reviewed scoring rubric; more varied held-out and adversarial data. Blank self-declared worksheets are now implemented, not real reviews.
 2. Actual live Responses API test (currently mocked), model-specific behavior and refusal handling.
 3. Semantic groundedness, relevant/complete citation checks, calibration of automatic versus human grading.
 4. Authenticated users and true tenant authorization; separate storage and retrieval security tests.
-5. Approved token-price snapshots, real cost measurement, rate limits and explicit client budgets.
+5. Approved token-price snapshots, real cost measurement, rate limits and enforceable client-dollar budgets. A five-case limit is not budget enforcement.
 6. Safe measured-evidence ingestion into the adoption gate after a reviewed run. **Offline fixture scores do not become automatically verified `MEASURED` evidence.**
 7. Repeatability studies across runs, CI infrastructure recovery, release criteria, monitoring, incident response and rollback.
 
