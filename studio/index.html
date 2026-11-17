@@ -105,6 +105,14 @@
             <div class="evaluation-note">NO COMPOSITE READINESS SCORE · NO REAL HUMAN APPROVAL · NO PRODUCTION AUTHORIZATION</div>
             <div id="adoption-results" class="adoption-results" aria-live="polite"><div class="empty-state">Loading synthetic recommendations…</div></div>
           </section>
+          <section class="panel assessment-workshop" aria-label="Create a fictional AI assessment">
+            <div class="evaluation-header">
+              <div><div class="eyebrow muted">M4 · SYNTHETIC ASSESSMENT WORKSHOP</div><h3>Turn a checklist into a decision brief.</h3><p>Describe a fictional opportunity, examine each decision dimension and record its gaps. Every submission creates an immutable local snapshot with an advisory state and a downloadable executive report.</p></div>
+              <button id="assessment-create-button" class="button primary" type="button">+ New fictional assessment</button>
+            </div>
+            <div class="evaluation-note">LOCAL-ONLY DRAFTS · UNVERIFIED REVIEWER NAMES · NO REAL CUSTOMER OR CONFIDENTIAL DATA</div>
+            <div id="assessment-history" class="assessment-history" aria-live="polite"><div class="empty-state">No custom fictional assessments recorded.</div></div>
+          </section>
           <footer class="footer">Independent public reference · Methodology v0.2 · No corporate endorsement or production-readiness claim · © Dani Monteiro</footer>
         </div>
       </main>
@@ -142,10 +150,31 @@
     </form></dialog>
 
     <dialog id="report-dialog" class="modal report-modal"><div class="modal-body">
-      <div class="modal-heading"><div><div class="eyebrow muted">DETERMINISTIC SYNTHETIC REPORT</div><h2>Executive opportunity brief</h2></div><button type="button" class="close-button" data-close="report-dialog" aria-label="Close">×</button></div>
+      <div class="modal-heading"><div><div class="eyebrow muted" id="report-kind-label">DETERMINISTIC SYNTHETIC REPORT</div><h2 id="report-title">Executive opportunity brief</h2></div><button type="button" class="close-button" data-close="report-dialog" aria-label="Close">×</button></div>
       <pre id="report-content" class="report-pre"></pre>
       <div class="form-actions"><button type="button" class="button ghost" data-close="report-dialog">Close</button><button id="download-report" type="button" class="button primary">Download Markdown ↓</button></div>
     </div></dialog>
+
+    <dialog id="assessment-dialog" class="modal assessment-modal">
+      <form id="assessment-form" class="modal-body">
+        <div class="modal-heading"><div><div class="eyebrow muted">FICTITIOUS / LOCAL TRAINING ONLY</div><h2>Create an adoption assessment</h2></div><button type="button" class="close-button" data-close="assessment-dialog" aria-label="Close">×</button></div>
+        <p>Use invented organizations, policies, people and figures only. This form cannot securely process a real client engagement. Every status is self-declared; a simulated verified flag is not proof.</p>
+        <div class="assessment-form-grid">
+          <label>Opportunity title<input name="title" minlength="8" maxlength="120" required placeholder="e.g. Fictional service policy assistant" /></label>
+          <label>Risk tier<select name="risk_tier"><option value="HIGH">High — independent review required</option><option value="MEDIUM">Medium</option><option value="LOW">Low</option></select></label>
+          <label>Synthetic client ID<input name="client_id" minlength="8" maxlength="70" pattern="[a-z0-9][a-z0-9-]*-demo" required placeholder="e.g. acme-demo" /></label>
+          <label>Synthetic use-case ID<input name="case_id" minlength="4" maxlength="100" pattern="[a-z0-9][a-z0-9-]*" required placeholder="e.g. acme-policy" /></label>
+          <label>Accountable owner (fictional)<input name="accountable_owner" minlength="3" maxlength="120" required placeholder="Fictional decision sponsor" /></label>
+          <label>Non-AI alternative<input name="non_ai_alternative" minlength="8" maxlength="500" required placeholder="Rule-based search, analyst workflow, or another comparator" /></label>
+        </div>
+        <div class="assessment-subheading"><div><div class="eyebrow muted">DECISION DIMENSIONS</div><h3>Evidence before recommendation</h3></div><p>Start with UNKNOWN. PASS needs an evidence reference; simulated verification is an explicit fictional assumption.</p></div>
+        <div id="assessment-checks" class="assessment-checks"></div>
+        <div class="assessment-subheading"><div><div class="eyebrow muted">SEPARATE BLOCKERS</div><h3>What must stop the work?</h3></div><button type="button" id="assessment-add-blocker" class="button outline small">+ Add blocker</button></div>
+        <div id="assessment-blockers" class="assessment-blockers"></div>
+        <label class="assessment-confirm"><input type="checkbox" name="confirmed_fictional" required /><span>I confirm that all entries are invented demonstration material. I understand this is not a customer assessment or a human approval.</span></label>
+        <div class="form-actions"><button type="button" class="button ghost" data-close="assessment-dialog">Cancel</button><button type="submit" class="button primary" id="assessment-submit">Save synthetic snapshot &amp; evaluate</button></div>
+      </form>
+    </dialog>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </body>

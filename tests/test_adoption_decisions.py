@@ -117,6 +117,14 @@ class AdoptionDecisionTests(unittest.TestCase):
         self.assertEqual(result["recommended_state"], "HOLD")
         self.assertEqual(len(result["reasons"]), 9)
 
+    def test_blank_evidence_is_allowed_only_as_an_explicit_hold(self):
+        scenario = copy.deepcopy(self.scenarios["fintrust-ideal-go"])
+        scenario["evidence"] = []
+        for check in scenario["checks"]:
+            check["evidence_ids"] = []
+            check["status"] = "UNKNOWN"
+        self.assertEqual(evaluate(scenario)["recommended_state"], "HOLD")
+
     def test_runner_reports_reproducible_fixture_provenance_and_refuses_overwrite(self):
         packet = run("fintrust-hold")
         self.assertEqual(packet["fixture"]["sha256"], sha256(FIXTURE_PATH))

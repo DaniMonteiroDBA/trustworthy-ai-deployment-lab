@@ -25,3 +25,26 @@
 .adoption-card summary{color:#86e5cf;cursor:pointer;font-size:11px;font-weight:700}
 .adoption-foot{border-top:1px solid #2c4954;margin-top:17px;padding-top:12px;font-size:9px;letter-spacing:.4px;color:#829eaa}
 @media(max-width:800px){.adoption-grid{grid-template-columns:1fr}.adoption-panel{padding:18px}.adoption-readonly{white-space:normal}}
+.assessment-workshop{margin-top:24px;min-height:0;background:linear-gradient(140deg,#132b34,#0b1f2e)}
+.assessment-history-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.saved-assessment{background:#091d2b;border:1px solid #2f4c59;border-radius:12px;padding:18px;min-width:0}
+.saved-assessment h4{margin:12px 0 6px;font:600 15px/1.4 var(--heading)}.saved-assessment p{color:#8faebd;font-size:11px;margin:0 0 16px;overflow-wrap:anywhere}
+.saved-assessment-foot{border-top:1px solid #2d4856;padding-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.saved-assessment-foot small{color:#82a5af;font-size:10px}
+.assessment-modal{max-width:min(940px,calc(100vw - 24px))}.assessment-modal .modal-body{padding:30px;gap:18px}
+.assessment-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.assessment-subheading{border-top:1px solid #2e4e5d;padding-top:24px;margin-top:7px;display:flex;justify-content:space-between;align-items:end;gap:16px}
+.assessment-subheading h3{font:600 19px var(--heading);margin:8px 0 0}.assessment-subheading p{margin:0;max-width:380px;color:#91b4be;font-size:11px;line-height:1.55}
+.assessment-checks{display:grid;gap:10px}.assessment-dimension{border:1px solid #33505c;border-radius:10px;background:#0e2733;overflow:hidden}
+.assessment-dimension[open]{border-color:#508478;background:#102c37}
+.assessment-dimension summary{cursor:pointer;display:flex;align-items:center;gap:13px;list-style:none;padding:14px 17px}
+.assessment-dimension summary::-webkit-details-marker{display:none}.assessment-dimension summary>span:nth-child(2){flex:1}
+.assessment-dimension summary strong{display:block;font-size:12px;color:#e0f6f2}.assessment-dimension summary small{display:block;margin-top:3px;color:#90b0be;font-size:10px}
+.dimension-number{border:1px solid #477c75;color:#9af1dd;border-radius:8px;padding:8px;font-weight:800;font-size:10px}
+.dimension-status{background:#30424d;border:1px solid #52707e;border-radius:16px;color:#b2ced8;font-size:9px;font-weight:700;letter-spacing:.7px;padding:5px 9px}
+.assessment-check-body{display:grid;gap:15px;border-top:1px solid #2f4d5a;padding:18px}.assessment-check-body>.mini-disclaimer{margin:0}
+.assessment-blockers{display:grid;gap:10px}.assessment-blocker{border:1px solid #725c43;border-radius:10px;padding:18px;background:#2d2926}
+.assessment-blocker-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;font-size:12px;color:#f1d4a3}
+.assessment-blocker>label{margin-top:12px}.assessment-modal .assessment-confirm{display:flex;flex-direction:row;gap:13px;align-items:flex-start;border:1px solid #51665a;background:#1b3b36;border-radius:9px;padding:14px;line-height:1.6;font-weight:500}
+.assessment-modal .assessment-confirm input{width:18px;height:18px;flex-shrink:0;accent-color:var(--aqua);margin:2px 0 0}
+@media(max-width:800px){.assessment-history-grid{grid-template-columns:1fr}.assessment-modal .modal-body{padding:19px}.assessment-form-grid{grid-template-columns:1fr}.assessment-subheading{align-items:start;flex-direction:column}.assessment-modal .form-actions{flex-wrap:wrap}.assessment-workshop{padding:18px}}

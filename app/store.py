@@ -7,6 +7,7 @@ implemented here. The database is intended for a local demo only.
 from __future__ import annotations
 
 import json
+import hashlib
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
@@ -147,9 +148,23 @@ class StudioStore:
                     created_at TEXT NOT NULL,
                     UNIQUE(decision_id, review_id)
                 );
+                CREATE TABLE IF NOT EXISTS adoption_assessments (
+                    assessment_id TEXT PRIMARY KEY,
+                    client_id TEXT NOT NULL,
+                    case_id TEXT NOT NULL,
+                    title TEXT NOT NULL,
+                    risk_tier TEXT NOT NULL,
+                    recommended_state TEXT NOT NULL,
+                    policy_version TEXT NOT NULL,
+                    source_sha256 TEXT NOT NULL,
+                    scenario_json TEXT NOT NULL,
+                    recommendation_json TEXT NOT NULL,
+                    created_at TEXT NOT NULL
+                );
                 CREATE INDEX IF NOT EXISTS evidence_case_idx ON evidence(case_id);
                 CREATE INDEX IF NOT EXISTS decision_case_stage_idx ON decisions(case_id, stage, created_at);
                 CREATE INDEX IF NOT EXISTS invalidation_decision_idx ON decision_invalidations(decision_id);
+                CREATE INDEX IF NOT EXISTS adoption_created_idx ON adoption_assessments(created_at);
                 """
             )
             count = conn.execute("SELECT count(*) FROM clients").fetchone()[0]
@@ -340,3 +355,44 @@ class StudioStore:
                    :evidence_ids_json,:blockers_json,:alternatives_json,:created_at)""", record
             )
         return record
+
+    def add_adoption_assessment(self, scenario: dict, recommendation: dict) -> dict:
+        """Append a local synthetic snapshot; never change a human stage decision."""
+        scenario_json = json.dumps(scenario, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        summary_json = json.dumps(recommendation, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        assessment_id = f"a-demo-{uuid4().hex}"
+        created_at = utc_now()
+        source_sha256 = hashlib.sha256(scenario_json.encode("utf-8")).hexdigest()
+        with self.connection() as conn:
+            conn.execute(
+                """INSERT INTO adoption_assessments
+                (assessment_id, client_id, case_id, title, risk_tier, recommended_state,
+                 policy_version, source_sha256, scenario_json, recommendation_json, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (assessment_id, scenario["client_id"], scenario["case_id"], scenario["title"],
+                 scenario["risk_tier"], recommendation["recommended_state"],
+                 recommendation["policy_version"], source_sha256,
+                 scenario_json, summary_json, created_at),
+            )
+        return self.adoption_assessment(assessment_id) or {}
+
+    def adoption_assessment(self, assessment_id: str) -> dict | None:
+        with self.connection() as conn:
+            row = conn.execute(
+                "SELECT * FROM adoption_assessments WHERE assessment_id=?", (assessment_id,)
+            ).fetchone()
+        if row is None:
+            return None
+        result = dict(row)
+        result["scenario"] = json.loads(result.pop("scenario_json"))
+        result["recommendation"] = json.loads(result.pop("recommendation_json"))
+        return result
+
+    def adoption_assessments(self) -> list[dict]:
+        with self.connection() as conn:
+            rows = conn.execute(
+                """SELECT assessment_id, client_id, case_id, title, risk_tier,
+                          recommended_state, policy_version, source_sha256, created_at
+                   FROM adoption_assessments ORDER BY rowid DESC LIMIT 100"""
+            ).fetchall()
+        return [dict(row) for row in rows]

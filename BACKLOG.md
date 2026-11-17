@@ -25,6 +25,7 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 - [x] Implement an append-only decision history, review records and stage unlock rules.
 - [x] Generate deterministic synthetic executive opportunity briefs.
 - [x] Expose read-only, risk-aware recommendations for four explicitly fictional validation-to-adoption scenarios without changing decision records.
+- [x] Build a local-only fictional assessment workshop with eight/nine editable criteria, optional blockers, append-only snapshots and deterministic evidence-linked reports; verified by tests, not an authenticated customer intake.
 - [ ] Add role-based access design, privacy inventory and threat boundaries.
 - [ ] Produce the complete technical account plan and interview templates.
 
@@ -62,9 +63,10 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 
 ## P4 — Adoption and external demonstration
 
+- [x] Implement the first **local synthetic assessment workshop** with a versioned advisory policy, traceable frozen inputs, and a download-ready Markdown decision brief. This is **not** a customer engagement or production deployment.
 - [ ] Add synthetic account portfolio and adoption progress views.
 - [ ] Develop ChatGPT Enterprise and Codex adoption playbooks without false deployment claims.
-- [ ] Create a decision-ready executive report and implementation handoff.
+- [ ] Create an authorized, decision-ready **customer** executive report and implementation handoff; the fictional Markdown brief is implemented but has no authenticated/approved evidence.
 - [ ] Deploy a public synthetic-data demo and verify HTTPS and domain availability.
 - [ ] Record a five-minute executive and fifteen-minute engineering walkthrough in English.
 - [ ] Update the README and CV only with verified, observed capabilities.

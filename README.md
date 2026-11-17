@@ -2,7 +2,7 @@
 
 **From enterprise AI opportunity to trustworthy deployment and measurable adoption.**
 
-> **Project status — M1 local Studio, M2 offline Evaluation Factory, and two M3 advisory tools implemented.** The evidence-first method, synthetic-client Studio, SQLite API, deterministic reports, versioned evaluation fixtures, non-AI baseline, deterministic safety candidate, and automated local tests are available. The M3 components create blank human-review worksheets **and** compute risk-aware synthetic adoption recommendations with explicit blockers. An opt-in OpenAI Responses adapter is **mock-tested only**. **Real human calibration, live model quality, authenticated users, enterprise tenant security, cloud deployment, and customer adoption are NOT validated.**
+> **Project status — M1 local Studio, M2 offline Evaluation Factory, M3 review/adoption policy, and M4 fictional assessment workshop implemented.** The evidence-first method, synthetic-client Studio, SQLite API, versioned offline evaluations, non-AI baseline, and automated local tests are available. M3 generates blank human-review worksheets and computes risk-aware synthetic adoption recommendations with explicit blockers. M4 adds **editable fictional assessments, append-only local snapshots, and deterministic evidence-linked executive briefs**. An opt-in OpenAI Responses adapter is **mock-tested only**. **Real human calibration, live model quality, authenticated users, enterprise tenant security, cloud deployment, and customer adoption are NOT validated.**
 
 **Maintainer:** [Dani Monteiro](https://www.linkedin.com/in/danimonteirodba/) · [Portfolio](https://danimonteiro.tech/)
 
@@ -23,11 +23,11 @@ The lab has three connected design components:
 
 1. **Trusted AI Adoption Framework** — seven human-accountable decision stages and evidence contracts.
 2. **AI Architecture & Evaluation Lab** — a first synthetic policy-answering and abstention evaluation (M2 offline); broader agentic runtime still planned.
-3. **AI Value & Adoption Studio** — a local application for synthetic clients, evidence, simulated human decision gates, executive briefs, and a read-only cross-client adoption recommendation showcase (**M1/M3 reference slices**; enterprise authorization and adoption tracking planned).
+3. **AI Value & Adoption Studio** — a local application for synthetic clients, evidence, simulated human decision gates, executive briefs, four fixed cross-client adoption recommendations, and a custom **fictional assessment workshop** (**M1/M3/M4 reference slices**; enterprise authorization and adoption tracking planned).
 
 The methodology is intended to be adaptable across organizations and technology providers. The technical reference case will demonstrate OpenAI integration without implying that all customers must adopt the same platform.
 
-**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Evaluation Factory](docs/EVALUATION_FACTORY.md) · [Human Review Protocol](docs/HUMAN_REVIEW_PROTOCOL.md) · [Adoption Decision Engine](docs/ADOPTION_DECISION_ENGINE.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
+**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Evaluation Factory](docs/EVALUATION_FACTORY.md) · [Human Review Protocol](docs/HUMAN_REVIEW_PROTOCOL.md) · [Adoption Decision Engine](docs/ADOPTION_DECISION_ENGINE.md) · [Fictional Assessment Workshop](docs/SYNTHETIC_ASSESSMENT_WORKSHOP.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
 
 ## Run the local AI Value & Adoption Studio
 
@@ -107,6 +107,14 @@ python -m adoption.run --output adoption/runs/checkpoint.json
 ```
 
 Both the CLI and the local Studio panel read frozen synthetic fixtures. The recommendation **never** records a human approval or changes the separate seven-stage Studio decisions. An advisory `GO` explicitly contains `release_authorized: false`. See the [policy, precedence and evidence contract](docs/ADOPTION_DECISION_ENGINE.md).
+
+## Create a new fictional adoption assessment (M4)
+
+The Studio's **New fictional assessment** workshop lets you rehearse a consulting interview for any invented `*-demo` account. Supply eight evidence-linked decision criteria (nine for a fictional high-risk case), optional open blockers, a risk tier, a fictional accountable owner, and a non-AI alternative. Fields start at `UNKNOWN` rather than inventing satisfactory evidence.
+
+Saving appends a new snapshot to the **local SQLite database**, evaluates blocker precedence, and presents a downloadable deterministic Markdown report with input hash and dimension-level traceability. The original four examples stay frozen. The seven-stage human-decision log remains separate and unchanged. **Neither the fictional checkbox nor an advisory `GO` authenticates a reviewer or approves deployment.**
+
+For the exact API, user walkthrough, restrictions and acceptance tests, see [Synthetic Assessment Workshop](docs/SYNTHETIC_ASSESSMENT_WORKSHOP.md). **Do not deploy the editable API publicly or enter real client data**: there is no authentication or secure enterprise tenancy.
 
 ```bash
 python -m unittest discover -s tests -v

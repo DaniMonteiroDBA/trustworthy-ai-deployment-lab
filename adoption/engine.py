@@ -78,8 +78,8 @@ def evaluate(scenario: dict) -> dict:
     evidence = scenario.get("evidence")
     checks = scenario.get("checks")
     blockers = scenario.get("blockers")
-    if not isinstance(evidence, list) or not 1 <= len(evidence) <= 60:
-        raise ValueError("Expected 1–60 synthetic evidence references")
+    if not isinstance(evidence, list) or len(evidence) > 60:
+        raise ValueError("Expected 0–60 synthetic evidence references")
     if not isinstance(checks, list) or len(checks) > 30 or not isinstance(blockers, list) or len(blockers) > 30:
         raise ValueError("Invalid checks or blocker list")
 

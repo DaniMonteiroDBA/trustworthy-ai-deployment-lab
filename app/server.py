@@ -10,13 +10,17 @@ import os
 import json
 from pathlib import Path
 from typing import Literal
+from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
+from adoption.engine import evaluate as evaluate_adoption
+from adoption.report import executive_markdown as adoption_executive_markdown
 from adoption.run import run as run_adoption_scenarios
+from adoption.schemas import SyntheticAssessmentInput
 from app.store import STAGES, StudioStore
 from evals.engine import CORPUS_PATH, DATASET_PATH, SafeRuleCandidate, digest, execute, load_fixtures
 
@@ -137,6 +141,37 @@ def create_app(database_path: Path | str | None = None) -> FastAPI:
             return run_adoption_scenarios(scenario_id)
         except ValueError:
             raise HTTPException(404, "Fictional adoption scenario not found") from None
+
+    @application.get("/api/adoption/assessments")
+    def custom_adoption_assessments() -> list[dict]:
+        return store.adoption_assessments()
+
+    @application.post("/api/adoption/assessments", status_code=201)
+    def create_custom_adoption_assessment(payload: SyntheticAssessmentInput) -> dict:
+        # This local-only, unauthenticated workshop requires explicit fictional-data attestation.
+        # Such a checkbox cannot detect real/confidential data; production hosting is prohibited.
+        scenario = payload.model_dump(exclude_none=True)
+        scenario.pop("confirmed_fictional")
+        scenario["scenario_id"] = f"custom-{uuid4().hex[:20]}"
+        try:
+            recommendation = evaluate_adoption(scenario)
+        except (TypeError, ValueError) as exc:
+            raise HTTPException(422, str(exc)) from None
+        return store.add_adoption_assessment(scenario, recommendation)
+
+    @application.get("/api/adoption/assessments/{assessment_id}/report", response_class=PlainTextResponse)
+    def custom_adoption_report(assessment_id: str) -> str:
+        record = store.adoption_assessment(assessment_id)
+        if record is None:
+            raise HTTPException(404, "Synthetic assessment not found")
+        return adoption_executive_markdown(record)
+
+    @application.get("/api/adoption/assessments/{assessment_id}")
+    def custom_adoption_assessment(assessment_id: str) -> dict:
+        record = store.adoption_assessment(assessment_id)
+        if record is None:
+            raise HTTPException(404, "Synthetic assessment not found")
+        return record
 
     @application.get("/api/evaluations/latest")
     def last_evaluation() -> dict:

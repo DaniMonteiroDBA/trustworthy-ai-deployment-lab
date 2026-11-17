@@ -1,6 +1,6 @@
 # AI Value & Adoption Studio — M1 Architecture
 
-**Status:** local synthetic M1 Studio, offline M2 evaluation, M3 review worksheet/comparison, and M3 read-only adoption recommendation engine implemented; optional OpenAI adapter is mock-tested only. Cloud deployment, authentication, genuinely independent human calibration, enterprise authorization, live model evaluation and production security controls are **not verified**.
+**Status:** local synthetic M1 Studio, offline M2 evaluation, M3 review worksheet/comparison and adoption policy, and M4 local fictional assessment workshop implemented; optional OpenAI adapter is mock-tested only. Cloud deployment, authentication, genuinely independent human calibration, enterprise authorization, live model evaluation and production security controls are **not verified**.
 
 ## Architecture boundary
 
@@ -31,6 +31,12 @@ The frontend is static HTML/CSS/JavaScript. It uses same-origin calls to a FastA
 | GET | `/api/evaluations/latest` | Reads locally persisted synthetic evaluation artifact |
 | GET | `/api/adoption/scenarios` | Reads four frozen, versioned fictional advisory scenarios; never changes gates |
 | GET | `/api/adoption/scenarios/{scenario_id}` | Retrieves one read-only, risk-aware adoption recommendation |
+| POST | `/api/adoption/assessments` | Appends a validated fictional assessment and advisory recommendation to local SQLite |
+| GET | `/api/adoption/assessments` | Lists recent fictional snapshot summaries |
+| GET | `/api/adoption/assessments/{assessment_id}` | Retrieves persisted input and recommendation with SHA-256 |
+| GET | `/api/adoption/assessments/{assessment_id}/report` | Renders an evidence-linked synthetic Markdown adoption brief |
+
+The M4 assessment table is **append-only through the exposed API** and is independent from the `decisions`, `decision_invalidations`, and `evidence_reviews` tables. The source SHA-256 fingerprints the canonical fictional input but is not a secure audit signature. The UI is not a sensitive-data intake. See [Synthetic Assessment Workshop](SYNTHETIC_ASSESSMENT_WORKSHOP.md).
 
 ## Stage state and history
 
@@ -52,7 +58,7 @@ The current code implements **application-level workflow checks**, not legal aut
 3. **No real client or confidential data.** The demo server may accept arbitrary user-supplied text. Run locally with fictional content only and never publish it as a production service.
 4. **No measured AI outcomes.** M2 tests cover deterministic fixture behavior and a mocked API adapter; no live model or real customer outcome has been measured.
 5. **No cloud release or data-retention process.** SQLite persists locally at `data/studio.db` and is excluded from Git.
-6. **Advisory engine is separate from authority.** Its hypothetical `GO` never updates the SQLite decision log or authenticates a reviewer. Source labels `SIMULATED_VERIFIED` are intentionally fictional.
+6. **Advisory engine is separate from authority.** Its hypothetical `GO` never updates the SQLite human decision log or authenticates a reviewer. Source labels `SIMULATED_VERIFIED` are intentionally fictional. The M4 attestation checkbox does not prevent users from pasting actual sensitive material.
 
 ## Planned architecture progression
 
@@ -61,6 +67,7 @@ The current code implements **application-level workflow checks**, not legal aut
 - **M2 still pending:** authenticated users, enterprise tenant authorization and action approval machine.
 - **M3 implemented portion:** provenance-bound synthetic reviewer worksheets with immutable source fields, two-sheet comparison, explicit reviewer disagreements, critical-failure lists, and bounded live-run case volume (without a USD cap). See [Human Review Protocol](HUMAN_REVIEW_PROTOCOL.md).
 - **M3 adoption policy slice:** explicit evidence links, eight mandatory decision dimensions plus high-risk independent review, blocker precedence and four illustrative recommendations. All advisory only. See [Adoption Decision Engine](ADOPTION_DECISION_ENGINE.md).
+- **M4 implemented slice:** editable fictional assessment form, strict input boundary, local append-only snapshots, SHA-256 and advisory Markdown brief; not a real customer workspace. See [Synthetic Assessment Workshop](SYNTHETIC_ASSESSMENT_WORKSHOP.md).
 - **M3 pending:** actually independent human-calibrated evals, adjudication, live model testing and cost tracking, reviewed measured-evidence ingestion, threat model, safe telemetry and repeatable release gates.
 - **M4:** real deployment architecture, privacy and retention decisions, synthetic account analytics, operational readiness and handoff.
 

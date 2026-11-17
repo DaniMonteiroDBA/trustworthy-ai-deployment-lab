@@ -1,6 +1,6 @@
 # Adoption Decision Engine — Reference Policy v0.1
 
-**Status:** implemented as a **read-only synthetic decision-support example**. This is not a certified risk methodology, an authorization workflow, a client score, or a substitute for expert review.
+**Status:** implemented as a **synthetic decision-support policy**, exercised by four immutable reference scenarios and an independent **local-only fictional assessment workshop**. This is not a certified risk methodology, an authorization workflow, a client score, or a substitute for expert review.
 
 ## Decision being modeled
 
@@ -80,6 +80,12 @@ The CLI records a SHA-256 of the versioned fixture and refuses to overwrite an e
 
 The Studio's new **M3 Adoption Decision Engine** panel displays all four frozen examples. Its read-only endpoints are `GET /api/adoption/scenarios` and `GET /api/adoption/scenarios/{scenario_id}`. **They do not read or modify the editable case decisions in SQLite.** This separation prevents example outputs from silently becoming authoritative approval records.
 
+## M4 fictional assessment workshop
+
+A separate local Studio form now takes user-entered **fictional** case details, criterion rationales, optional evidence references and blockers, then applies the same policy. Missing evidence is permitted as an explicit input state, but a check marked `PASS` without qualifying simulated support becomes `HOLD`. The workshop saves **append-only SQLite snapshots** with an input SHA-256 and returns a deterministic Markdown executive brief. It never updates the seven-stage decision log or the frozen M3 fixture file.
+
+See [Synthetic Assessment Workshop](SYNTHETIC_ASSESSMENT_WORKSHOP.md) for form behavior, schema, endpoints, boundary checks, reproducibility and limitations. The new form does not verify customer identity, reviewer identity, evidence authenticity or commercial readiness, and must **not be deployed publicly** without real security design.
+
 ## Human decision and next evidence
 
 The recommendation should be reviewed by a real accountable sponsor, technical owner, data/security reviewers and operational owner as relevant to the context. Before any real `GO`, a private production-quality implementation needs verified identities and access controls; source evidence, quality, risks and cost measured in the intended environment; a reviewed non-AI comparator; independent judgment for critical cases; documented residual risk and rollback; and explicit recorded authority for the next stage.
@@ -90,7 +96,7 @@ The recommendation should be reviewed by a real accountable sponsor, technical o
 
 1. Risk-tier checklists and blocker severities need stakeholder calibration and independent challenge.
 2. There is no verification of data-source authenticity, reviewer identity or factual correctness of check status.
-3. The recommendation engine reads versioned fictional scenario files only; editable customer assessments, secure tenant authorization and user roles remain unimplemented.
+3. The recommendation engine reads versioned fictional scenario files **or local user-entered fictional snapshots**. An **editable real-customer assessment**, secure tenant authorization and user roles remain unimplemented.
 4. No real model run, approved cost ceiling, budget enforcement or adoption outcome is measured.
 5. A future trusted adapter must bind authenticated, source-verified evidence and actual test outputs to an auditable human decision. It must **never** convert an advisory `GO` into production approval automatically.
 
