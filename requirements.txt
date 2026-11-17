@@ -1,0 +1,6 @@
+# Local demo server. Runtime package versions should be reviewed before deployment.
+fastapi>=0.115,<1.0
+uvicorn>=0.30,<1.0
+
+# Used by FastAPI's TestClient during local verification.
+httpx>=0.27,<1.0

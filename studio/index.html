@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#08131e" />
+    <meta name="description" content="Synthetic, evidence-first enterprise AI adoption reference lab by Dani Monteiro." />
+    <title>AI Value & Adoption Studio — Trustworthy AI Deployment Lab</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script defer src="/assets/app.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Studio home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span class="brand-copy">TRUSTWORTHY <strong>AI LAB</strong><small>BY DANI MONTEIRO</small></span>
+        </a>
+        <div class="rail-label">WORKSPACE</div>
+        <div class="rail-item active"><span class="rail-icon">◈</span>AI Value Studio <span class="rail-dot"></span></div>
+        <div class="rail-section-header"><span>CLIENT PORTFOLIO</span><span id="portfolio-count">—</span></div>
+        <nav id="client-list" class="client-list" aria-label="Synthetic clients">
+          <div class="loading-card">Loading synthetic portfolio…</div>
+        </nav>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-foot">
+          <span class="signal"></span><span>REFERENCE ENVIRONMENT</span>
+          <p>All organizations, stakeholders and business statements are fictional. No real client integrations.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div class="breadcrumb"><span>AI VALUE STUDIO</span><span class="sep">/</span><span id="breadcrumb-client">Portfolio</span></div>
+          <div class="top-right"><span class="demo-pill"><span class="tiny-dot"></span>SYNTHETIC DATA ONLY</span><a href="https://github.com/DaniMonteiroDBA/trustworthy-ai-deployment-lab" target="_blank" rel="noreferrer">View source ↗</a></div>
+        </header>
+
+        <div class="workspace-body">
+          <div class="hero">
+            <div class="hero-content">
+              <div class="eyebrow"><span class="eyebrow-line"></span>TRUSTED INTELLIGENCE ENGINEERING</div>
+              <h1>From opportunity <span>to evidence.</span></h1>
+              <p>Explore how an AI initiative moves from business discovery to an accountable deployment decision. Every recommendation has a source, a human owner, and a reason to proceed—or stop.</p>
+              <div class="hero-actions"><button id="report-button" class="button primary">View executive brief <span>↗</span></button><span class="meta-inline">7 STAGES <span class="meta-sep">·</span> EVIDENCE FIRST <span class="meta-sep">·</span> LOCAL DEMO</span></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="orbit orbit-outer"></div><div class="orbit orbit-mid"></div><div class="orbit orbit-inner"></div>
+              <div class="center-core"><span>AI</span></div>
+              <span class="orbit-point p1"></span><span class="orbit-point p2"></span><span class="orbit-point p3"></span>
+              <span class="art-label label-1">EVIDENCE</span><span class="art-label label-2">CONTROL</span><span class="art-label label-3">VALUE</span>
+            </div>
+          </div>
+
+          <div class="section-title-row">
+            <div><div class="eyebrow muted">ACTIVE OPPORTUNITY</div><h2 id="case-title">Select an opportunity</h2><p id="case-subtitle" class="section-caption">Choose a fictional client to inspect the process.</p></div>
+            <div class="case-meta"><span id="case-risk" class="risk-pill">—</span><span id="case-sector" class="secondary-pill">—</span></div>
+          </div>
+
+          <div class="overview-grid">
+            <div class="stat-card"><span class="stat-label">DECISIONS APPROVED</span><span class="stat-value" id="approved-count">0 <small>/ 7</small></span><span class="stat-foot">Accountable human gates</span></div>
+            <div class="stat-card"><span class="stat-label">EVIDENCE RECORDS</span><span class="stat-value" id="evidence-count">0</span><span class="stat-foot">With explicit provenance</span></div>
+            <div class="stat-card"><span class="stat-label">CURRENT STATE</span><span class="stat-value status-text" id="current-status">NOT STARTED</span><span class="stat-foot">No assumed readiness</span></div>
+          </div>
+
+          <div class="section-bar"><div><div class="eyebrow muted">THE DECISION JOURNEY</div><h3>Seven gates. One accountable path.</h3></div><span class="section-hint">Select a stage to inspect its requirements</span></div>
+          <div class="stage-strip" id="stage-strip" aria-label="Methodology stages"></div>
+
+          <div class="detail-layout">
+            <section class="panel decision-panel" aria-label="Selected decision stage">
+              <div class="panel-heading"><div class="eyebrow muted" id="stage-number">STAGE 01 / 07</div><div class="header-status" id="stage-status">NOT STARTED</div></div>
+              <h3 id="stage-title">Discover</h3>
+              <p id="stage-description" class="stage-description">Determine whether the problem is owned, material, and measurable.</p>
+              <div class="prompt-label">DECISION QUESTION</div>
+              <div class="decision-question" id="stage-question">Is there a business problem worth solving?</div>
+              <div class="prompt-label">WHAT THE REVIEWER NEEDS</div>
+              <ul id="stage-requirements" class="requirements"></ul>
+              <div class="latest-decision" id="latest-decision"><span>No review decision recorded for this stage.</span></div>
+              <button id="decision-button" class="button primary wide">Record a review decision <span>→</span></button>
+              <p class="mini-disclaimer">Reviewer names are self-entered in this local demonstration; they are not authenticated identities.</p>
+            </section>
+
+            <section class="panel evidence-panel" aria-label="Evidence and case context">
+              <div class="evidence-head"><div><div class="eyebrow muted">EVIDENCE REGISTER</div><h3>Claims need sources.</h3></div><button id="evidence-button" class="button small outline">+ Add evidence</button></div>
+              <div id="evidence-list" class="evidence-list"><div class="empty-state">No evidence selected.</div></div>
+              <div class="panel-divider"></div>
+              <div class="eyebrow muted">BUSINESS CONTEXT</div>
+              <div class="context-row"><span>Owner</span><strong id="business-owner">—</strong></div>
+              <div class="context-row"><span>Success measure</span><strong id="success-metric">—</strong></div>
+              <div class="context-row"><span>Non-AI alternative</span><strong id="non-ai-alternative">—</strong></div>
+            </section>
+          </div>
+          <footer class="footer">Independent public reference · Methodology v0.1 · No corporate endorsement or production-readiness claim · © Dani Monteiro</footer>
+        </div>
+      </main>
+    </div>
+
+    <dialog id="evidence-dialog" class="modal"><form id="evidence-form" class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted">ADD A SYNTHETIC RECORD</div><h2>Record evidence</h2></div><button type="button" class="close-button" data-close="evidence-dialog" aria-label="Close">×</button></div>
+      <p>Demo input only. Do not enter real client, personal, financial, or confidential information.</p>
+      <label>Evidence class<select name="evidence_class" required><option value="DECLARED">Declared statement</option><option value="DOCUMENTED">Document reference</option><option value="INFERRED">Inference / hypothesis</option></select></label>
+      <label>Synthetic source<input name="source" minlength="4" maxlength="240" required placeholder="e.g. Fictional stakeholder interview" /></label>
+      <label>What does it establish?<textarea name="summary" minlength="12" maxlength="2000" rows="4" required placeholder="Describe a specific synthetic claim or gap"></textarea></label>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="evidence-dialog">Cancel</button><button class="button primary" type="submit">Add unverified evidence</button></div>
+    </form></dialog>
+
+    <dialog id="review-dialog" class="modal"><form id="review-form" class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted">DEMO REVIEW ONLY</div><h2>Review evidence</h2></div><button type="button" class="close-button" data-close="review-dialog" aria-label="Close">×</button></div>
+      <p id="review-summary"></p>
+      <input name="evidence_id" type="hidden" />
+      <label>Review result<select name="status"><option value="VERIFIED">Verified in this demo</option><option value="REJECTED">Rejected</option></select></label>
+      <label>Reviewer name (unverified)<input name="reviewer" minlength="3" maxlength="120" required placeholder="Fictional reviewer" /></label>
+      <label>Review rationale<textarea name="rationale" minlength="10" maxlength="1000" rows="3" required></textarea></label>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="review-dialog">Cancel</button><button type="submit" class="button primary">Record review</button></div>
+    </form></dialog>
+
+    <dialog id="decision-dialog" class="modal"><form id="decision-form" class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted" id="decision-stage-tag">STAGE REVIEW</div><h2>Record a decision</h2></div><button type="button" class="close-button" data-close="decision-dialog" aria-label="Close">×</button></div>
+      <p>Only a designated human may authorize a real project. Here, decisions represent an unauthenticated synthetic rehearsal.</p>
+      <label>Decision<select name="status" required><option value="IN_REVIEW">In review</option><option value="HOLD">Hold</option><option value="REWORK">Rework</option><option value="NO_GO">No go</option><option value="GO">Go to next bounded stage</option></select></label>
+      <label>Decision owner (unverified)<input name="owner" minlength="3" maxlength="120" required value="Fictional advisory reviewer" /></label>
+      <label>Rationale<textarea name="rationale" minlength="12" maxlength="2000" rows="3" required placeholder="Explain the reasoning and uncertainty"></textarea></label>
+      <fieldset class="evidence-choices"><legend>Evidence references</legend><div id="evidence-options"></div></fieldset>
+      <label>Unresolved blockers (one per line)<textarea name="blockers" rows="2" placeholder="Leave empty only if none remain"></textarea></label>
+      <label>Alternatives considered (one per line)<textarea name="alternatives" rows="2" placeholder="Including non-AI options"></textarea></label>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="decision-dialog">Cancel</button><button type="submit" class="button primary">Save decision</button></div>
+    </form></dialog>
+
+    <dialog id="report-dialog" class="modal report-modal"><div class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted">DETERMINISTIC SYNTHETIC REPORT</div><h2>Executive opportunity brief</h2></div><button type="button" class="close-button" data-close="report-dialog" aria-label="Close">×</button></div>
+      <pre id="report-content" class="report-pre"></pre>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="report-dialog">Close</button><button id="download-report" type="button" class="button primary">Download Markdown ↓</button></div>
+    </div></dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

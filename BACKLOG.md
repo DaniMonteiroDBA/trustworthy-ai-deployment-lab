@@ -20,10 +20,12 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 ## P1 — One end-to-end client journey
 
 - [ ] Complete FinTrust's seven stages using **synthetic** documents and explicit review decisions.
-- [ ] Define configurable profiles for RetailFlow and CivicData.
-- [ ] Build first Adoption Studio page: client, case, evidence, decision, blockers and status.
+- [x] Seed three synthetic organizations and reference use-case profiles for FinTrust, RetailFlow and CivicData.
+- [x] Build the first local Adoption Studio: client, case, evidence, decision, blockers and status.
+- [x] Implement an append-only decision history, review records and stage unlock rules.
+- [x] Generate deterministic synthetic executive opportunity briefs.
 - [ ] Add role-based access design, privacy inventory and threat boundaries.
-- [ ] Produce executive discovery report and technical account plan templates.
+- [ ] Produce the complete technical account plan and interview templates.
 
 **Acceptance:** a demo user can follow a fictional opportunity from discovery through planned rollout without invented metrics, hidden evidence, or unowned gates.
 

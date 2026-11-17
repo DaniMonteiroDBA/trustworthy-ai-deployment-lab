@@ -2,7 +2,7 @@
 
 **From enterprise AI opportunity to trustworthy deployment and measurable adoption.**
 
-> **Project status — methodology and design in progress.** Decision-gate documentation, a synthetic discovery record, and a limited contract validator are available. The AI runtime, client Studio, actual evaluations, production deployment, and customer outcomes are **not yet implemented or validated**.
+> **Project status — M1 local vertical slice implemented.** The evidence-first methodology, a local synthetic-client Studio, a SQLite-backed API, deterministic report generation, and automated workflow checks are available. **OpenAI runtime integration, real evaluations, authenticated users, enterprise tenant security, cloud deployment, and measured customer adoption are NOT implemented or validated.**
 
 **Maintainer:** [Dani Monteiro](https://www.linkedin.com/in/danimonteirodba/) · [Portfolio](https://danimonteiro.tech/)
 
@@ -23,11 +23,33 @@ The lab has three connected design components:
 
 1. **Trusted AI Adoption Framework** — seven human-accountable decision stages and evidence contracts.
 2. **AI Architecture & Evaluation Lab** — one deep, runnable technical reference case (planned).
-3. **AI Value & Adoption Studio** — an application for synthetic client portfolio, architecture and adoption tracking (planned).
+3. **AI Value & Adoption Studio** — an initial local application for synthetic clients, evidence, decision gates, and executive briefs (**M1 in progress**; advanced architecture/adoption tracking planned).
 
 The methodology is intended to be adaptable across organizations and technology providers. The technical reference case will demonstrate OpenAI integration without implying that all customers must adopt the same platform.
 
 **Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
+
+## Run the local AI Value & Adoption Studio
+
+The current implementation is a **synthetic-only training and architecture reference**. It has **no authentication** and must not be hosted publicly with real information.
+
+Requirements: Python 3.12+; install dependencies in a dedicated virtual environment if appropriate.
+
+```bash
+python -m pip install -r requirements.txt
+python -m uvicorn app.server:app --host 127.0.0.1 --port 8000
+```
+
+Open **http://127.0.0.1:8000** for the Studio or **http://127.0.0.1:8000/docs** for the FastAPI API reference.
+
+The app initializes a local SQLite database in `data/studio.db` (excluded from Git) with three fictional clients. It allows a demo reviewer to add **unverified** synthetic evidence, record a simulated review, make bounded stage decisions, and download a deterministic executive brief. It rejects evidence references from other use cases and prevents approval without verified evidence or while blockers remain. The validation and improvement stages cannot pass without measured evidence from a future evaluation engine.
+
+```bash
+python -m unittest discover -s tests -v
+python -m scripts.validate_examples examples/fintrust_discovery.json
+```
+
+See [M1 Architecture](docs/ARCHITECTURE.md) for explicit trust boundaries and limitations.
 
 This independent, open reference project explores a more demanding question:
 
@@ -162,8 +184,8 @@ trustworthy-ai-deployment-lab/
 ├── SCOPE.md              # Vision, stages and acceptance criteria
 ├── BACKLOG.md            # Phases and work sequencing
 ├── REQUIREMENTS_TRACEABILITY.md
-├── app/                 # API, orchestration, model/retrieval adapters
-├── demo/                # UI or client for reference scenarios
+├── app/                 # Local Studio API and store; future model/retrieval adapters
+├── studio/              # Executable synthetic-client frontend
 ├── examples/             # Synthetic consulting decision records
 ├── scripts/              # Contract and evidence validation
 ├── datasets/            # Synthetic and versioned evaluation cases
@@ -187,7 +209,7 @@ Environment setup, supported versions, local run commands, test commands, and de
 | Phase | Scope | Exit evidence | Status |
 | --- | --- | --- | --- |
 | 0 — Define | Seven-stage methodology, decision contract, synthetic example, scope and traceability | Documentation, validation checks and human review | In progress |
-| 1 — Build | Synthetic data, minimal API, retrieval/model integration, controlled workflow | Runnable local vertical slice and tests | Planned |
+| 1 — Build | Synthetic client Studio, decision gates and later model/retrieval integration | Local portfolio and decision slice exists; runtime integration pending | In progress |
 | 2 — Verify | Evals, adversarial cases, observability, cost/latency measurement | Reproducible evaluation results | Planned |
 | 3 — Release | CI gates, documented deployment, rollback, demo | Release decision and deployment evidence | Planned |
 
