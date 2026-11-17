@@ -7,6 +7,7 @@ tenant isolation is implemented. This app must not be exposed with real data.
 from __future__ import annotations
 
 import os
+import json
 from pathlib import Path
 from typing import Literal
 
@@ -16,6 +17,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from app.store import STAGES, StudioStore
+from evals.engine import CORPUS_PATH, DATASET_PATH, SafeRuleCandidate, digest, execute, load_fixtures
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -111,6 +113,7 @@ def make_executive_report(record: dict) -> str:
 def create_app(database_path: Path | str | None = None) -> FastAPI:
     path = Path(database_path or os.environ.get("STUDIO_DB_PATH", str(ROOT / "data" / "studio.db")))
     store = StudioStore(path)
+    eval_path = path.parent / "eval_runs" / "latest.json"
     application = FastAPI(title="Trustworthy AI Adoption Studio", version="0.1.0")
     application.state.store = store
 
@@ -121,6 +124,27 @@ def create_app(database_path: Path | str | None = None) -> FastAPI:
     @application.get("/api/clients")
     def clients() -> list[dict]:
         return store.clients()
+
+    @application.get("/api/evaluations/latest")
+    def last_evaluation() -> dict:
+        if not eval_path.is_file():
+            raise HTTPException(404, "No offline evaluation has been executed yet")
+        return json.loads(eval_path.read_text(encoding="utf-8"))
+
+    @application.post("/api/evaluations/offline")
+    def run_offline_evaluation() -> dict:
+        # Explicitly *no* model/API invocation from this unauthenticated demo.
+        dataset, corpus = load_fixtures()
+        result = execute(dataset, corpus, SafeRuleCandidate())
+        result["dataset"]["sha256"] = digest(DATASET_PATH)
+        result["corpus"]["sha256"] = digest(CORPUS_PATH)
+        result["run_mode"] = "OFFLINE_DETERMINISTIC"
+        result["estimated_cost_usd"] = None
+        eval_path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = eval_path.with_suffix(".json.tmp")
+        temporary.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        temporary.replace(eval_path)
+        return result
 
     @application.get("/api/clients/{client_id}")
     def client(client_id: str) -> dict:

@@ -117,6 +117,32 @@
     $("evidence-list").querySelectorAll("[data-review]").forEach(button => button.addEventListener("click", () => openReview(button.dataset.review)));
   }
 
+  function renderEvaluation(run) {
+    const target = $("evaluation-results");
+    if (!run || run.run_mode !== "OFFLINE_DETERMINISTIC") {
+      target.innerHTML = '<div class="empty-state">No validated offline run was found.</div>';
+      return;
+    }
+    const cards = run.systems.map(system => {
+      const s = system.summary;
+      const failures = system.cases.filter(c => !c.grade.passed).map(c => `<li><strong>${escape(c.case_id)}</strong> · ${escape(c.grade.reasons.join("; "))}</li>`).join("");
+      return `<article class="evaluation-scorecard"><span class="eyebrow muted">${escape(system.provider.replaceAll("_"," "))}</span><div class="evaluation-score">${escape(s.passed)} <small>/ ${escape(s.total)}</small></div><p>${escape(s.failed)} heuristic check(s) failed · ${escape(s.critical_failures.length)} critical failures</p><details><summary>Inspect failures and limitations</summary>${failures ? `<ul>${failures}</ul>` : '<p>No failures in this small synthetic fixture set. This is not independent validation.</p>'}</details></article>`;
+    }).join("");
+    target.innerHTML = `<div class="evaluation-meta"><span>DATASET ${escape(run.dataset.version)}</span><span>CRITERIA ${escape(run.criteria_status)}</span><span>GATE ${escape(run.release_decision)}</span></div><div class="evaluation-grid">${cards}</div><p class="mini-disclaimer">These results are fixture-specific observations from a deterministic rules program, not model performance, real-world impact, or an enterprise release authorization.</p>`;
+  }
+
+  async function runEvaluation() {
+    const button = $("eval-run-button");
+    button.disabled = true;
+    button.textContent = "Evaluating fictional cases…";
+    try {
+      const result = await api("/api/evaluations/offline", {method:"POST"});
+      renderEvaluation(result);
+      toast("Offline baseline and safety-rule evaluation completed.");
+    } catch(error) { toast(error.message, true); }
+    finally { button.disabled = false; button.textContent = "Run offline evaluation ▶"; }
+  }
+
   function openModal(id) { $(id).showModal(); }
   function closeModal(id) { $(id).close(); }
   function openReview(evidenceId) {
@@ -192,12 +218,14 @@
     $("report-button").addEventListener("click", openReport);
     $("download-report").addEventListener("click", downloadReport);
     $("evidence-form").addEventListener("submit", onEvidenceSubmit);
+    $("eval-run-button").addEventListener("click", runEvaluation);
     $("review-form").addEventListener("submit", onReviewSubmit);
     $("decision-form").addEventListener("submit", onDecisionSubmit);
     try {
       state.clients = await api("/api/clients");
       if (!state.clients.length) throw new Error("No synthetic clients are available.");
       await selectClient(state.clients[0].client_id);
+      try { renderEvaluation(await api("/api/evaluations/latest")); } catch(_) { /* fresh local database */ }
     } catch(error) {toast(`Could not load the Studio: ${error.message}`, true);}
   }
   start();

@@ -11,8 +11,8 @@
 | R02 | Executive and technical discovery | Discover/Assess interviews and current/target profile | Versioned briefs with decisions, constraints, and owners | DESIGNED |
 | R03 | Prioritize use cases by business value | Prioritization portfolio with non-AI alternative | Comparison criteria, assumptions, rationale and human decision | DESIGNED |
 | R04 | Design applied AI architecture end-to-end | Architecture blueprints, ADRs, controls and handoff | Diagram, tradeoffs, integration, identity, cost and resilience decisions | PLANNED |
-| R05 | Demonstrate APIs/SDKs and coding fluency | Python/FastAPI reference runtime with OpenAI API | Running code, automated tests, traceable example call | PLANNED |
-| R06 | Evaluate models, RAG and agentic workflows | Evals, groundedness, abstention, tool tests | Versioned dataset, baselines, raw results and reproducible run | PLANNED |
+| R05 | Demonstrate APIs/SDKs and coding fluency | FastAPI local Studio; opt-in OpenAI Responses adapter and Pydantic structured output | API integration test with mocked SDK in `tests/test_evaluation_factory.py`; live model call still pending | IMPLEMENTED |
+| R06 | Evaluate models, RAG and agentic workflows | Versioned synthetic dataset, baseline search, deterministic candidate, abstention/citation/adversarial grader | Local `python -m evals.run` and tests are reproducible; **real model, RAG and agentic evaluations remain pending** | DESIGNED |
 | R07 | Guide safe production adoption | Production readiness, security/privacy controls, rollback | Threat model, verified isolation/authorization tests, runbooks | PLANNED |
 | R08 | Coordinate delivery specialists and handoffs | Roles, decision owners, dependency and handoff packages | Responsibility matrix and documented signoffs in synthetic demo | DESIGNED |
 | R09 | Track technical account health and impact | Adoption and value dashboard | Usage, blockers, observed costs and outcome metrics with data provenance | PLANNED |
@@ -31,3 +31,5 @@ The lab should show **a complete journey for one fictional client**, with two ad
 ## Evidence publishing rule
 
 Before changing any row to `IMPLEMENTED` or `VERIFIED`, link the code path, test result, reviewed artifact, report, or verified deployment that supports the exact claim. A checked checkbox, screenshot, or model-generated report by itself is insufficient evidence of production readiness.
+
+**M2 scope note (2026-11-17):** `R05 IMPLEMENTED` means an integration adapter and mocked request-contract test exist; it is **not** a claim of successfully executing a paid API request. `R06 DESIGNED` remains partial because the current run benchmarks deterministic fixture controls, not actual model or agent quality. See [`docs/EVALUATION_FACTORY.md`](docs/EVALUATION_FACTORY.md).

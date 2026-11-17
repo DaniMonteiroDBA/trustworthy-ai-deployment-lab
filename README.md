@@ -2,7 +2,7 @@
 
 **From enterprise AI opportunity to trustworthy deployment and measurable adoption.**
 
-> **Project status — M1 local vertical slice implemented.** The evidence-first methodology, a local synthetic-client Studio, a SQLite-backed API, deterministic report generation, and automated workflow checks are available. **OpenAI runtime integration, real evaluations, authenticated users, enterprise tenant security, cloud deployment, and measured customer adoption are NOT implemented or validated.**
+> **Project status — M1 local Studio and M2 offline Evaluation Factory implemented.** The evidence-first method, synthetic-client Studio, SQLite API, deterministic reports, versioned evaluation fixtures, a non-AI baseline, a deterministic safety candidate, and automated local tests are available. An opt-in OpenAI Responses adapter is implemented and **mock-tested only**. **Live model quality, authenticated users, enterprise tenant security, cloud deployment, and customer adoption are NOT validated.**
 
 **Maintainer:** [Dani Monteiro](https://www.linkedin.com/in/danimonteirodba/) · [Portfolio](https://danimonteiro.tech/)
 
@@ -22,12 +22,12 @@ Likewise, an enterprise can invest in AI without first proving that it has selec
 The lab has three connected design components:
 
 1. **Trusted AI Adoption Framework** — seven human-accountable decision stages and evidence contracts.
-2. **AI Architecture & Evaluation Lab** — one deep, runnable technical reference case (planned).
+2. **AI Architecture & Evaluation Lab** — a first synthetic policy-answering and abstention evaluation (M2 offline); broader agentic runtime still planned.
 3. **AI Value & Adoption Studio** — an initial local application for synthetic clients, evidence, decision gates, and executive briefs (**M1 in progress**; advanced architecture/adoption tracking planned).
 
 The methodology is intended to be adaptable across organizations and technology providers. The technical reference case will demonstrate OpenAI integration without implying that all customers must adopt the same platform.
 
-**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
+**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Evaluation Factory](docs/EVALUATION_FACTORY.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
 
 ## Run the local AI Value & Adoption Studio
 
@@ -42,7 +42,26 @@ python -m uvicorn app.server:app --host 127.0.0.1 --port 8000
 
 Open **http://127.0.0.1:8000** for the Studio or **http://127.0.0.1:8000/docs** for the FastAPI API reference.
 
-The app initializes a local SQLite database in `data/studio.db` (excluded from Git) with three fictional clients. It allows a demo reviewer to add **unverified** synthetic evidence, record a simulated review, make bounded stage decisions, and download a deterministic executive brief. It rejects evidence references from other use cases and prevents approval without verified evidence or while blockers remain. If cited evidence is rejected after approval, the previous `GO` becomes ineffective and downstream stages lock; a later re-verification cannot reactivate it without a new human review. The validation and improvement stages cannot pass without measured evidence from a future evaluation engine.
+The app initializes a local SQLite database in `data/studio.db` (excluded from Git) with three fictional clients. It allows a demo reviewer to add **unverified** synthetic evidence, record a simulated review, make bounded stage decisions, and download a deterministic executive brief. It rejects evidence references from other use cases and prevents approval without verified evidence or while blockers remain. If cited evidence is rejected after approval, the previous `GO` becomes ineffective and downstream stages lock; a later re-verification cannot reactivate it without a new human review. The validation and improvement stages cannot pass without reviewed measured evidence. M2's offline fixture results are **not** automatically promoted to approved evidence.
+
+## Run the M2 Evaluation Factory
+
+The Studio includes a **Run offline evaluation** button, which compares deterministic baseline search to conservative safety rules on 13 versioned synthetic questions. There are no model calls or charges in this mode.
+
+```bash
+python -m evals.run
+```
+
+The CLI writes a reproducible JSON artifact to `evals/runs/latest.json` (excluded from Git). Each case has assertions, source citations, observed pass/fail reasons, and critical-failure labels. Run latency is a local observation; **no business ROI, dollar cost or actual model accuracy is implied**.
+
+The OpenAI Responses provider is opt-in, mock-tested, and **not yet validated with a live API call**:
+
+```bash
+python -m pip install -r requirements-openai.txt
+python -m evals.run --candidate openai --model YOUR_APPROVED_MODEL_ID --allow-billed-api --max-cases 3
+```
+
+Set `OPENAI_API_KEY` in your environment beforehand. This command may incur charges. Review [evaluation design, evidence classes, and limitations](docs/EVALUATION_FACTORY.md) before use.
 
 ```bash
 python -m unittest discover -s tests -v
@@ -75,7 +94,7 @@ A user may ask a question about internal policies or request a business action. 
 - Prepare a proposed action for review; or
 - Refuse an unauthorized or unsafe request.
 
-**Illustrative scenario (not yet implemented):** A tenant employee asks whether an exception to a purchasing policy is allowed and requests that an approval be submitted. The assistant should find the applicable version of the policy, identify the user's permissions, avoid accessing another tenant's documents, and require explicit authorization before submitting any action.
+**Illustrative scenario (partially implemented offline):** A tenant employee asks about a purchasing policy or requests an exception approval. The M2 fixture runner checks retrieval of current fictional policy records, abstention, and unauthorized-action refusal. Real user permissions, tool execution, and authorization to submit an actual approval are **not implemented**.
 
 All examples and datasets will be **synthetic**. No customer, employer, Microsoft, or confidential project material will be used.
 
@@ -92,7 +111,7 @@ All examples and datasets will be **synthetic**. No customer, employer, Microsof
 | Evaluation and release | Is a change demonstrably better and acceptably safe? | Versioned evaluation dataset, baselines, regression report, release gates |
 | Operations | Can engineers identify failures, cost, and latency? | Structured telemetry, trace examples, runbooks, failure-injection results |
 
-These are **planned deliverables**, not assertions about the current repository.
+This table defines the intended end state. Individual M1/M2 components identified above are implemented; the remaining enterprise capabilities are **planned**, not assertions about the current repository.
 
 ## Proposed architecture
 
@@ -175,7 +194,7 @@ Controls planned for implementation and testing:
 
 The repository will distinguish **design intent**, **implemented control**, and **control verified by automated or manual testing**. A security checklist is not evidence that a control is effective.
 
-## Planned repository structure
+## Repository structure and planned extensions
 
 The directories below describe the proposed layout; they may not exist yet.
 
@@ -188,12 +207,16 @@ trustworthy-ai-deployment-lab/
 ├── studio/              # Executable synthetic-client frontend
 ├── examples/             # Synthetic consulting decision records
 ├── scripts/              # Contract and evidence validation
-├── datasets/            # Synthetic and versioned evaluation cases
-├── evals/               # Evaluators, baselines, reports
+├── evals/
+│   ├── datasets/         # Versioned synthetic cases
+│   ├── fixtures/         # Synthetic policy corpora
+│   ├── reports/          # Auditable offline checkpoint
+│   └── engine.py         # Baseline, runner and heuristic grader
 ├── tests/               # Unit, integration, security, and adversarial tests
 ├── docs/
 │   ├── METHODOLOGY.md     # Seven-stage adoption process
 │   ├── DECISION_CONTRACT.md
+│   ├── EVALUATION_FACTORY.md
 │   ├── discovery/       # User needs, success criteria, assumptions
 │   ├── architecture/    # Diagrams, interfaces, ADRs
 │   ├── security/        # Threat model and trust boundaries
@@ -202,7 +225,7 @@ trustworthy-ai-deployment-lab/
 └── .github/workflows/   # CI checks and evaluation gates
 ```
 
-Environment setup, supported versions, local run commands, test commands, and deployment steps will be documented **after those commands exist and have been verified**. Until then, this README is not a runnable installation guide.
+The local M1 Studio and M2 offline runner have verified commands above. **Cloud deployment, private-data operations and rollback remain planned**; this README is not a production installation guide.
 
 ## Delivery roadmap
 
@@ -210,7 +233,7 @@ Environment setup, supported versions, local run commands, test commands, and de
 | --- | --- | --- | --- |
 | 0 — Define | Seven-stage methodology, decision contract, synthetic example, scope and traceability | Documentation, validation checks and human review | In progress |
 | 1 — Build | Synthetic client Studio, decision gates and later model/retrieval integration | Local portfolio and decision slice exists; runtime integration pending | In progress |
-| 2 — Verify | Evals, adversarial cases, observability, cost/latency measurement | Reproducible evaluation results | Planned |
+| 2 — Verify | Evals, adversarial cases, observability, cost/latency measurement | Synthetic offline run exists; live API, cost, human calibration pending | In progress |
 | 3 — Release | CI gates, documented deployment, rollback, demo | Release decision and deployment evidence | Planned |
 
 **Implementation planning start:** November 17, 2026. Milestone completion dates will be recorded only after work is done.

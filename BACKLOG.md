@@ -41,14 +41,16 @@ Backlog items are planned until their acceptance evidence is linked. No completi
 
 ## P3 — Evaluation, risk and operations
 
-- [ ] Define versioned evaluation cases and human-reviewed criteria before runs.
-- [ ] Benchmark a simple non-AI or retrieval baseline against candidate implementation.
-- [ ] Execute adversarial cases: prompt injection, cross-tenant access, unauthorized action.
-- [ ] Track task quality, latency, failures, cost and review decisions with provenance.
+- [x] Define versioned **proposed** evaluation cases; independent human criteria review remains pending.
+- [x] Benchmark simple non-AI search against an **offline deterministic** safety-rules candidate; this is not an AI model benchmark.
+- [x] Execute synthetic adversarial cases for prompt injection, cross-tenant access and unauthorized action.
+- [ ] Measure live AI task quality and approved cost; offline runtime/heuristic scores and version provenance are implemented.
 - [ ] Add GitHub Actions quality and security checks with release blockers.
 - [ ] Document production-readiness gaps, rollback procedure and incident responsibilities.
 
 **Acceptance:** at least one reproducible evaluation run includes failures and limitations; critical authorization regressions block release.
+
+**Current evidence:** `python -m evals.run` creates a local, versioned offline artifact; the Studio exposes the same synthetic run. The OpenAI Responses adapter has a mocked test and is never called by default. CI runner allocation is tracked in [issue #6](https://github.com/DaniMonteiroDBA/trustworthy-ai-deployment-lab/issues/6).
 
 ## P4 — Adoption and external demonstration
 
