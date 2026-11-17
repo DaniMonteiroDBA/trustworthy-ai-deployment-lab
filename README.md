@@ -1,8 +1,8 @@
 # Trustworthy AI Deployment Lab
 
-**From enterprise discovery to evidence-based AI deployment decisions.**
+**From enterprise AI opportunity to trustworthy deployment and measurable adoption.**
 
-> **Project status — planned.** The implementation is scheduled to begin on **November 17, 2026**. This README defines the intended scope, architecture, evaluation plan, and acceptance criteria. It does **not** represent completed functionality, passing tests, measured performance, or a production deployment.
+> **Project status — methodology and design in progress.** Decision-gate documentation, a synthetic discovery record, and a limited contract validator are available. The AI runtime, client Studio, actual evaluations, production deployment, and customer outcomes are **not yet implemented or validated**.
 
 **Maintainer:** [Dani Monteiro](https://www.linkedin.com/in/danimonteirodba/) · [Portfolio](https://danimonteiro.tech/)
 
@@ -14,6 +14,20 @@
 ## Why this lab exists
 
 An AI demo can produce a convincing answer while failing to establish whether the answer is supported, whether an action is authorized, or whether the system can be operated safely.
+
+Likewise, an enterprise can invest in AI without first proving that it has selected the right problem, established measurable success criteria, considered non-AI alternatives, or prepared its users and operating teams.
+
+**Expanded mission:** demonstrate a reusable consulting journey that moves from business discovery and readiness assessment through prioritization, architecture, proof of value, controlled deployment, adoption, and measurable outcomes.
+
+The lab has three connected design components:
+
+1. **Trusted AI Adoption Framework** — seven human-accountable decision stages and evidence contracts.
+2. **AI Architecture & Evaluation Lab** — one deep, runnable technical reference case (planned).
+3. **AI Value & Adoption Studio** — an application for synthetic client portfolio, architecture and adoption tracking (planned).
+
+The methodology is intended to be adaptable across organizations and technology providers. The technical reference case will demonstrate OpenAI integration without implying that all customers must adopt the same platform.
+
+**Start with the specifications:** [Scope](SCOPE.md) · [Methodology](docs/METHODOLOGY.md) · [Decision Contract](docs/DECISION_CONTRACT.md) · [Job Requirements Traceability](REQUIREMENTS_TRACEABILITY.md) · [Backlog](BACKLOG.md).
 
 This independent, open reference project explores a more demanding question:
 
@@ -29,7 +43,7 @@ The goal is not to maximize the number of model calls or agents. It is to make a
 
 ## Reference use case
 
-The planned demonstration is an **enterprise knowledge and workflow assistant** serving multiple simulated organizations (tenants).
+The planned deep technical demonstration is an **enterprise knowledge and workflow assistant** serving multiple simulated organizations (tenants). The consultative methodology will additionally cover fictional financial, retail, and public-sector client journeys.
 
 A user may ask a question about internal policies or request a business action. The system must decide whether to:
 
@@ -145,12 +159,19 @@ The directories below describe the proposed layout; they may not exist yet.
 
 ```text
 trustworthy-ai-deployment-lab/
+├── SCOPE.md              # Vision, stages and acceptance criteria
+├── BACKLOG.md            # Phases and work sequencing
+├── REQUIREMENTS_TRACEABILITY.md
 ├── app/                 # API, orchestration, model/retrieval adapters
 ├── demo/                # UI or client for reference scenarios
+├── examples/             # Synthetic consulting decision records
+├── scripts/              # Contract and evidence validation
 ├── datasets/            # Synthetic and versioned evaluation cases
 ├── evals/               # Evaluators, baselines, reports
 ├── tests/               # Unit, integration, security, and adversarial tests
 ├── docs/
+│   ├── METHODOLOGY.md     # Seven-stage adoption process
+│   ├── DECISION_CONTRACT.md
 │   ├── discovery/       # User needs, success criteria, assumptions
 │   ├── architecture/    # Diagrams, interfaces, ADRs
 │   ├── security/        # Threat model and trust boundaries
@@ -165,12 +186,21 @@ Environment setup, supported versions, local run commands, test commands, and de
 
 | Phase | Scope | Exit evidence | Status |
 | --- | --- | --- | --- |
-| 0 — Define | Discovery brief, use case, non-goals, threat model, high-level architecture | Reviewed design and backlog | Planned |
+| 0 — Define | Seven-stage methodology, decision contract, synthetic example, scope and traceability | Documentation, validation checks and human review | In progress |
 | 1 — Build | Synthetic data, minimal API, retrieval/model integration, controlled workflow | Runnable local vertical slice and tests | Planned |
 | 2 — Verify | Evals, adversarial cases, observability, cost/latency measurement | Reproducible evaluation results | Planned |
 | 3 — Release | CI gates, documented deployment, rollback, demo | Release decision and deployment evidence | Planned |
 
-**Planned start:** November 17, 2026. Milestone completion dates will be recorded only after work is done.
+**Implementation planning start:** November 17, 2026. Milestone completion dates will be recorded only after work is done.
+
+### Validate the current synthetic contract example
+
+The following commands check the current **limited method contract**, not the behavior of an AI application:
+
+```bash
+python -m unittest discover -s tests -v
+python -m scripts.validate_examples examples/fintrust_discovery.json
+```
 
 ## Definition of done
 
