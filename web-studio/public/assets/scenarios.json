@@ -1,0 +1,563 @@
+{
+  "schema_version": "1.0",
+  "synthetic": true,
+  "fixture": {
+    "version": "1.0",
+    "sha256": "a825012bea75b0f480d78a34a2841d40def5991bad2e3de294b21cb54bcc1007"
+  },
+  "recommendations": [
+    {
+      "schema_version": "1.0",
+      "policy_version": "0.1.0",
+      "synthetic": true,
+      "scenario_id": "fintrust-hold",
+      "title": "FinTrust — unresolved authorization and model evidence",
+      "client_id": "fintrust-demo",
+      "case_id": "fintrust-policy-action",
+      "risk_tier": "HIGH",
+      "target_transition": "VALIDATE_TO_ADOPT",
+      "recommended_state": "HOLD",
+      "rationale": "5 explicit issue(s) require a human decision before advancing.",
+      "reasons": [
+        {
+          "state": "HOLD",
+          "code": "OPEN_AUTHORIZATION_BLOCKER",
+          "dimension": null,
+          "detail": "Data-use and organizational approval have not been obtained.",
+          "next_action": "Obtain explicit sponsor, data, security and IP authorization"
+        },
+        {
+          "state": "HOLD",
+          "code": "UNKNOWN_CRITERION",
+          "dimension": "AI_EVALUATION",
+          "detail": "No real model quality or independently reviewed result exists.",
+          "next_action": "Review held-out cases and evaluate an authorized real model"
+        },
+        {
+          "state": "HOLD",
+          "code": "UNKNOWN_CRITERION",
+          "dimension": "ECONOMICS",
+          "detail": "No approved measured cost or bounded financial case exists.",
+          "next_action": "Establish approved price inputs, costs and limits"
+        },
+        {
+          "state": "HOLD",
+          "code": "UNKNOWN_CRITERION",
+          "dimension": "INDEPENDENT_REVIEW",
+          "detail": "No human judgments have been independently submitted.",
+          "next_action": "Conduct blinded human evaluation and adjudication"
+        },
+        {
+          "state": "REWORK",
+          "code": "CORRECTABLE_GAP",
+          "dimension": "OPERATIONS",
+          "detail": "Incident owner and tested rollback are absent.",
+          "next_action": "Draft and test an incident and rollback plan"
+        }
+      ],
+      "dimensions": [
+        {
+          "dimension": "BUSINESS_VALUE",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-scope"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Fictional problem and intended success criterion recorded.",
+          "next_action": "Have a real sponsor confirm benefit and baseline"
+        },
+        {
+          "dimension": "NON_AI_ALTERNATIVE",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-scope"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Human policy search is recorded as a comparator.",
+          "next_action": "Validate its practical cost and quality"
+        },
+        {
+          "dimension": "DATA_GOVERNANCE",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-design"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Synthetic data boundary and source ownership are described.",
+          "next_action": "Obtain customer permission before using private data"
+        },
+        {
+          "dimension": "AI_EVALUATION",
+          "status": "UNKNOWN",
+          "evidence_ids": [
+            "ft-eval"
+          ],
+          "support_valid_for_demo": false,
+          "rationale": "No real model quality or independently reviewed result exists.",
+          "next_action": "Review held-out cases and evaluate an authorized real model"
+        },
+        {
+          "dimension": "SECURITY_PRIVACY",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-risk"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Illustrative trust boundaries are documented, not deployed.",
+          "next_action": "Verify actual IAM and privacy controls in approved environment"
+        },
+        {
+          "dimension": "ECONOMICS",
+          "status": "UNKNOWN",
+          "evidence_ids": [
+            "ft-cost"
+          ],
+          "support_valid_for_demo": false,
+          "rationale": "No approved measured cost or bounded financial case exists.",
+          "next_action": "Establish approved price inputs, costs and limits"
+        },
+        {
+          "dimension": "OPERATIONS",
+          "status": "GAP",
+          "evidence_ids": [
+            "ft-design"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Incident owner and tested rollback are absent.",
+          "next_action": "Draft and test an incident and rollback plan"
+        },
+        {
+          "dimension": "HUMAN_ACCOUNTABILITY",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-scope"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "A fictional business decision owner is named.",
+          "next_action": "Verify real accountable identities and roles"
+        },
+        {
+          "dimension": "INDEPENDENT_REVIEW",
+          "status": "UNKNOWN",
+          "evidence_ids": [
+            "ft-eval"
+          ],
+          "support_valid_for_demo": false,
+          "rationale": "No human judgments have been independently submitted.",
+          "next_action": "Conduct blinded human evaluation and adjudication"
+        }
+      ],
+      "mandatory_dimensions": [
+        "BUSINESS_VALUE",
+        "NON_AI_ALTERNATIVE",
+        "DATA_GOVERNANCE",
+        "AI_EVALUATION",
+        "SECURITY_PRIVACY",
+        "ECONOMICS",
+        "OPERATIONS",
+        "HUMAN_ACCOUNTABILITY",
+        "INDEPENDENT_REVIEW"
+      ],
+      "accountable_owner": "Fictional procurement sponsor",
+      "non_ai_alternative": "Maintain human-controlled policy search and decision tree",
+      "decision_authority": "ADVISORY_ONLY",
+      "human_approval": "NOT_RECORDED",
+      "release_authorized": false,
+      "customer_readiness_verified": false,
+      "evidence_limitations": "All evidence and apparent verification are fictional simulations. No independent identity, business measurement, customer approval or real deployment is verified."
+    },
+    {
+      "schema_version": "1.0",
+      "policy_version": "0.1.0",
+      "synthetic": true,
+      "scenario_id": "retailflow-rework",
+      "title": "RetailFlow — correctable economics gap",
+      "client_id": "retailflow-demo",
+      "case_id": "retailflow-discrepancy",
+      "risk_tier": "MEDIUM",
+      "target_transition": "VALIDATE_TO_ADOPT",
+      "recommended_state": "REWORK",
+      "rationale": "1 explicit issue(s) require a human decision before advancing.",
+      "reasons": [
+        {
+          "state": "REWORK",
+          "code": "CORRECTABLE_GAP",
+          "dimension": "ECONOMICS",
+          "detail": "The comparative running cost has not been measured.",
+          "next_action": "Measure cost per useful output and compare with non-AI option"
+        }
+      ],
+      "dimensions": [
+        {
+          "dimension": "BUSINESS_VALUE",
+          "status": "PASS",
+          "evidence_ids": [
+            "rf-brief"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Business objective exists inside the fictional brief.",
+          "next_action": "Validate baseline with a real operator"
+        },
+        {
+          "dimension": "NON_AI_ALTERNATIVE",
+          "status": "PASS",
+          "evidence_ids": [
+            "rf-brief"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Analyst dashboard is an explicit comparator.",
+          "next_action": "Compare benefits with current process"
+        },
+        {
+          "dimension": "DATA_GOVERNANCE",
+          "status": "PASS",
+          "evidence_ids": [
+            "rf-controls"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Synthetic records have a hypothetical permitted source.",
+          "next_action": "Revalidate actual data permissions"
+        },
+        {
+          "dimension": "AI_EVALUATION",
+          "status": "PASS",
+          "evidence_ids": [
+            "rf-eval"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Only a simulated test example is asserted to pass.",
+          "next_action": "Repeat with held-out real-run measurements"
+        },
+        {
+          "dimension": "SECURITY_PRIVACY",
+          "status": "PASS",
+          "evidence_ids": [
+            "rf-controls"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Simulated risk and privacy checks are listed.",
+          "next_action": "Test security before deployment"
+        },
+        {
+          "dimension": "ECONOMICS",
+          "status": "GAP",
+          "evidence_ids": [
+            "rf-cost"
+          ],
+          "support_valid_for_demo": false,
+          "rationale": "The comparative running cost has not been measured.",
+          "next_action": "Measure cost per useful output and compare with non-AI option"
+        },
+        {
+          "dimension": "OPERATIONS",
+          "status": "PASS",
+          "evidence_ids": [
+            "rf-controls"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Fictional escalation and support owners are specified.",
+          "next_action": "Exercise an incident in a safe test environment"
+        },
+        {
+          "dimension": "HUMAN_ACCOUNTABILITY",
+          "status": "PASS",
+          "evidence_ids": [
+            "rf-controls"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Fictional decision owner and escalation path identified.",
+          "next_action": "Authenticate decision makers in a real pilot"
+        }
+      ],
+      "mandatory_dimensions": [
+        "BUSINESS_VALUE",
+        "NON_AI_ALTERNATIVE",
+        "DATA_GOVERNANCE",
+        "AI_EVALUATION",
+        "SECURITY_PRIVACY",
+        "ECONOMICS",
+        "OPERATIONS",
+        "HUMAN_ACCOUNTABILITY"
+      ],
+      "accountable_owner": "Fictional operations director",
+      "non_ai_alternative": "Rule-based exception dashboard and analyst triage",
+      "decision_authority": "ADVISORY_ONLY",
+      "human_approval": "NOT_RECORDED",
+      "release_authorized": false,
+      "customer_readiness_verified": false,
+      "evidence_limitations": "All evidence and apparent verification are fictional simulations. No independent identity, business measurement, customer approval or real deployment is verified."
+    },
+    {
+      "schema_version": "1.0",
+      "policy_version": "0.1.0",
+      "synthetic": true,
+      "scenario_id": "civicdata-no-go",
+      "title": "CivicData — unacceptable source permission failure",
+      "client_id": "civicdata-demo",
+      "case_id": "civicdata-policy",
+      "risk_tier": "HIGH",
+      "target_transition": "VALIDATE_TO_ADOPT",
+      "recommended_state": "NO_GO",
+      "rationale": "3 explicit issue(s) require a human decision before advancing.",
+      "reasons": [
+        {
+          "state": "NO_GO",
+          "code": "OPEN_TERMINAL_BLOCKER",
+          "dimension": null,
+          "detail": "Proposed source has no approved processing permission in this fictional case.",
+          "next_action": "Reject the proposed path; return to data and purpose design"
+        },
+        {
+          "state": "NO_GO",
+          "code": "UNACCEPTABLE_CONDITION",
+          "dimension": "DATA_GOVERNANCE",
+          "detail": "Permission to process the proposed records has been rejected.",
+          "next_action": "Stop this proposed data path and redesign lawfully"
+        },
+        {
+          "state": "NO_GO",
+          "code": "UNACCEPTABLE_CONDITION",
+          "dimension": "SECURITY_PRIVACY",
+          "detail": "Required processing authorization is absent.",
+          "next_action": "Use a lawful, separately reviewed alternative"
+        }
+      ],
+      "dimensions": [
+        {
+          "dimension": "BUSINESS_VALUE",
+          "status": "PASS",
+          "evidence_ids": [
+            "cd-brief"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Fictional service need is described for comparison.",
+          "next_action": "Obtain actual service-owner validation"
+        },
+        {
+          "dimension": "NON_AI_ALTERNATIVE",
+          "status": "PASS",
+          "evidence_ids": [
+            "cd-brief"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Supervised human service remains available.",
+          "next_action": "Maintain human service while blocked"
+        },
+        {
+          "dimension": "DATA_GOVERNANCE",
+          "status": "FAIL",
+          "evidence_ids": [
+            "cd-rights"
+          ],
+          "support_valid_for_demo": false,
+          "rationale": "Permission to process the proposed records has been rejected.",
+          "next_action": "Stop this proposed data path and redesign lawfully"
+        },
+        {
+          "dimension": "AI_EVALUATION",
+          "status": "PASS",
+          "evidence_ids": [
+            "cd-eval"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Hypothetical test result exists but cannot overcome denied data access.",
+          "next_action": "Do not use a good metric to bypass authorization"
+        },
+        {
+          "dimension": "SECURITY_PRIVACY",
+          "status": "FAIL",
+          "evidence_ids": [
+            "cd-rights"
+          ],
+          "support_valid_for_demo": false,
+          "rationale": "Required processing authorization is absent.",
+          "next_action": "Use a lawful, separately reviewed alternative"
+        },
+        {
+          "dimension": "ECONOMICS",
+          "status": "PASS",
+          "evidence_ids": [
+            "cd-cost"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Invented economic example cannot legitimize a blocked design.",
+          "next_action": "Revisit economics only after lawful redesign"
+        },
+        {
+          "dimension": "OPERATIONS",
+          "status": "PASS",
+          "evidence_ids": [
+            "cd-checks"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Fictional incident response path is documented.",
+          "next_action": "Test procedures after redesign"
+        },
+        {
+          "dimension": "HUMAN_ACCOUNTABILITY",
+          "status": "PASS",
+          "evidence_ids": [
+            "cd-checks"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Hypothetical accountable roles are named.",
+          "next_action": "Verify human roles before any actual use"
+        },
+        {
+          "dimension": "INDEPENDENT_REVIEW",
+          "status": "PASS",
+          "evidence_ids": [
+            "cd-checks"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Fictional external review paper is included only for illustration.",
+          "next_action": "Conduct genuine review if a lawful project proceeds"
+        }
+      ],
+      "mandatory_dimensions": [
+        "BUSINESS_VALUE",
+        "NON_AI_ALTERNATIVE",
+        "DATA_GOVERNANCE",
+        "AI_EVALUATION",
+        "SECURITY_PRIVACY",
+        "ECONOMICS",
+        "OPERATIONS",
+        "HUMAN_ACCOUNTABILITY",
+        "INDEPENDENT_REVIEW"
+      ],
+      "accountable_owner": "Fictional public service manager",
+      "non_ai_alternative": "Curated document search and supervised human service",
+      "decision_authority": "ADVISORY_ONLY",
+      "human_approval": "NOT_RECORDED",
+      "release_authorized": false,
+      "customer_readiness_verified": false,
+      "evidence_limitations": "All evidence and apparent verification are fictional simulations. No independent identity, business measurement, customer approval or real deployment is verified."
+    },
+    {
+      "schema_version": "1.0",
+      "policy_version": "0.1.0",
+      "synthetic": true,
+      "scenario_id": "fintrust-ideal-go",
+      "title": "FinTrust — hypothetical ideal GO candidate (never approved)",
+      "client_id": "fintrust-demo",
+      "case_id": "fintrust-policy-action",
+      "risk_tier": "HIGH",
+      "target_transition": "VALIDATE_TO_ADOPT",
+      "recommended_state": "GO",
+      "rationale": "Every mandatory demo criterion has supplied simulated support; human confirmation is still mandatory.",
+      "reasons": [],
+      "dimensions": [
+        {
+          "dimension": "BUSINESS_VALUE",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-brief"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Imagined owner confirms meaningful process improvement.",
+          "next_action": "Obtain real baseline and benefit observations"
+        },
+        {
+          "dimension": "NON_AI_ALTERNATIVE",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-brief"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Hypothetical comparison includes no-AI alternative.",
+          "next_action": "Re-run comparative analysis with actual users"
+        },
+        {
+          "dimension": "DATA_GOVERNANCE",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-risk"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "All hypothetical data rights are documented as simulated.",
+          "next_action": "Verify ownership and actual permissions"
+        },
+        {
+          "dimension": "AI_EVALUATION",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-eval"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Invented measurement demonstrates gate logic, not model performance.",
+          "next_action": "Run an actual authorized model evaluation"
+        },
+        {
+          "dimension": "SECURITY_PRIVACY",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-risk"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Assumed controls are in place solely for this fictional case.",
+          "next_action": "Threat model and test controls in a real environment"
+        },
+        {
+          "dimension": "ECONOMICS",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-cost"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Invented measured costs satisfy the simulated contract only.",
+          "next_action": "Establish a genuine pricing and budget record"
+        },
+        {
+          "dimension": "OPERATIONS",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-risk"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "Imaginary rollback and incident owners are available.",
+          "next_action": "Verify readiness through operational exercise"
+        },
+        {
+          "dimension": "HUMAN_ACCOUNTABILITY",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-risk"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "An example human sponsor is identified but not authenticated.",
+          "next_action": "Obtain a genuine named owner and authorization"
+        },
+        {
+          "dimension": "INDEPENDENT_REVIEW",
+          "status": "PASS",
+          "evidence_ids": [
+            "ft-ideal-human"
+          ],
+          "support_valid_for_demo": true,
+          "rationale": "This is an invented review for demonstrating advisory logic only.",
+          "next_action": "Perform actual independent and documented review"
+        }
+      ],
+      "mandatory_dimensions": [
+        "BUSINESS_VALUE",
+        "NON_AI_ALTERNATIVE",
+        "DATA_GOVERNANCE",
+        "AI_EVALUATION",
+        "SECURITY_PRIVACY",
+        "ECONOMICS",
+        "OPERATIONS",
+        "HUMAN_ACCOUNTABILITY",
+        "INDEPENDENT_REVIEW"
+      ],
+      "accountable_owner": "Fictional procurement sponsor",
+      "non_ai_alternative": "Documented human policy portal and approval queue",
+      "decision_authority": "ADVISORY_ONLY",
+      "human_approval": "NOT_RECORDED",
+      "release_authorized": false,
+      "customer_readiness_verified": false,
+      "evidence_limitations": "All evidence and apparent verification are fictional simulations. No independent identity, business measurement, customer approval or real deployment is verified."
+    }
+  ],
+  "approval_status": "NO_REAL_HUMAN_APPROVAL",
+  "scope": "TRAINING_ONLY_NO_CUSTOMER_DECISION"
+}
