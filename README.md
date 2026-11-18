@@ -7,7 +7,28 @@
 **Maintainer:** [Dani Monteiro](https://www.linkedin.com/in/danimonteirodba/) · [Portfolio](https://danimonteiro.tech/)
 
 **Repository:** [DaniMonteiroDBA/trustworthy-ai-deployment-lab](https://github.com/DaniMonteiroDBA/trustworthy-ai-deployment-lab)  
-**Project domain:** `lab.danimonteiro.tech` — subdomain created; website deployment and HTTPS availability are not yet verified.
+**Project domain:** `lab.danimonteiro.tech` — custom-domain DNS and HTTPS activation pending verification.
+
+## One repository, two implementations
+
+This is the canonical source repository for both reference implementations:
+
+| Component | Location | Purpose |
+| --- | --- | --- |
+| Python reference | Repository root (`app/`, `studio/`, `evals/`, `adoption/`, `tests/`) | Local FastAPI/SQLite application, deterministic scenarios and methodology tests |
+| Hosted web Studio | [`web-studio/`](web-studio/) | Private, signed-in Cloudflare Worker/ChatGPT Sites deployment with D1 persistence and hosted UI |
+
+The two implementations deliberately have **different backends and storage**. The
+hosted version is not a proxy to the local Python API, and its business rules
+are mirrored in JavaScript. Run each component's tests independently and do
+not interpret either synthetic test suite as evidence of enterprise readiness.
+
+The website currently runs at the [private Studio preview](https://dani-trusted-intelligence-lab-demo.danimonteirodba.chatgpt.site/studio/).
+The preferred domain is `lab.danimonteiro.tech` once DNS verification and TLS
+issuance complete. See [hosting, synchronization and DNS instructions](docs/HOSTED_STUDIO.md).
+
+The GitHub Actions workflow remains intentionally paused while its billing
+restrictions persist. Repository consolidation does **not** reactivate it.
 
 ---
 

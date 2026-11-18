@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#08131e" />
+    <meta name="description" content="Synthetic, evidence-first enterprise AI adoption reference lab by Dani Monteiro." />
+    <title>AI Value & Adoption Studio — Trustworthy AI Deployment Lab</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script defer src="/assets/app.js"></script>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="/" aria-label="Studio home">
+          <span class="brand-mark"><span></span><span></span><span></span></span>
+          <span class="brand-copy">TRUSTWORTHY <strong>AI LAB</strong><small>BY DANI MONTEIRO</small></span>
+        </a>
+        <div class="rail-label">WORKSPACE</div>
+        <div class="rail-item active"><span class="rail-icon">◈</span>AI Value Studio <span class="rail-dot"></span></div>
+        <div class="rail-section-header"><span>CLIENT PORTFOLIO</span><span id="portfolio-count">—</span></div>
+        <nav id="client-list" class="client-list" aria-label="Synthetic clients">
+          <div class="loading-card">Loading synthetic portfolio…</div>
+        </nav>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-foot">
+          <span class="signal"></span><span>REFERENCE ENVIRONMENT</span>
+          <p>All organizations, stakeholders and business statements are fictional. No real client integrations.</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div class="breadcrumb"><span>AI VALUE STUDIO</span><span class="sep">/</span><span id="breadcrumb-client">Portfolio</span></div>
+          <div class="top-right"><span class="demo-pill"><span class="tiny-dot"></span>PRIVATE STUDIO · SYNTHETIC ONLY</span><a href="https://github.com/DaniMonteiroDBA/trustworthy-ai-deployment-lab" target="_blank" rel="noreferrer">Python reference ↗</a></div>
+        </header>
+
+        <div class="workspace-body">
+          <div class="hero">
+            <div class="hero-content">
+              <div class="eyebrow"><span class="eyebrow-line"></span>TRUSTED INTELLIGENCE ENGINEERING</div>
+              <h1>From opportunity <span>to evidence.</span></h1>
+              <p>Explore how an AI initiative moves from business discovery to an accountable deployment decision. Every recommendation has a source, a human owner, and a reason to proceed—or stop.</p>
+              <div class="hero-actions"><button id="report-button" class="button primary">View executive brief <span>↗</span></button><span class="meta-inline">7 STAGES <span class="meta-sep">·</span> EVIDENCE FIRST <span class="meta-sep">·</span> PERSISTED AUDIT</span></div>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="orbit orbit-outer"></div><div class="orbit orbit-mid"></div><div class="orbit orbit-inner"></div>
+              <div class="center-core"><span>AI</span></div>
+              <span class="orbit-point p1"></span><span class="orbit-point p2"></span><span class="orbit-point p3"></span>
+              <span class="art-label label-1">EVIDENCE</span><span class="art-label label-2">CONTROL</span><span class="art-label label-3">VALUE</span>
+            </div>
+          </div>
+
+          <div class="section-title-row">
+            <div><div class="eyebrow muted">ACTIVE OPPORTUNITY</div><h2 id="case-title">Select an opportunity</h2><p id="case-subtitle" class="section-caption">Choose a fictional client to inspect the process.</p></div>
+            <div class="case-meta"><span id="case-risk" class="risk-pill">—</span><span id="case-sector" class="secondary-pill">—</span></div>
+          </div>
+
+          <div class="overview-grid">
+            <div class="stat-card"><span class="stat-label">DECISIONS APPROVED</span><span class="stat-value" id="approved-count">0 <small>/ 7</small></span><span class="stat-foot">Accountable human gates</span></div>
+            <div class="stat-card"><span class="stat-label">EVIDENCE RECORDS</span><span class="stat-value" id="evidence-count">0</span><span class="stat-foot">With explicit provenance</span></div>
+            <div class="stat-card"><span class="stat-label">CURRENT STATE</span><span class="stat-value status-text" id="current-status">NOT STARTED</span><span class="stat-foot">No assumed readiness</span></div>
+          </div>
+
+          <div class="section-bar"><div><div class="eyebrow muted">THE DECISION JOURNEY</div><h3>Seven gates. One accountable path.</h3></div><span class="section-hint">Select a stage to inspect its requirements</span></div>
+          <div class="stage-strip" id="stage-strip" aria-label="Methodology stages"></div>
+
+          <div class="detail-layout">
+            <section class="panel decision-panel" aria-label="Selected decision stage">
+              <div class="panel-heading"><div class="eyebrow muted" id="stage-number">STAGE 01 / 07</div><div class="header-status" id="stage-status">NOT STARTED</div></div>
+              <h3 id="stage-title">Discover</h3>
+              <p id="stage-description" class="stage-description">Determine whether the problem is owned, material, and measurable.</p>
+              <div class="prompt-label">DECISION QUESTION</div>
+              <div class="decision-question" id="stage-question">Is there a business problem worth solving?</div>
+              <div class="prompt-label">WHAT THE REVIEWER NEEDS</div>
+              <ul id="stage-requirements" class="requirements"></ul>
+              <div class="latest-decision" id="latest-decision"><span>No review decision recorded for this stage.</span></div>
+              <button id="decision-button" class="button primary wide">Record a review decision <span>→</span></button>
+              <p class="mini-disclaimer">The server records the authenticated account alongside every fictional review or decision. Names typed in this form are labels, not identity proofs.</p>
+            </section>
+
+            <section class="panel evidence-panel" aria-label="Evidence and case context">
+              <div class="evidence-head"><div><div class="eyebrow muted">EVIDENCE REGISTER</div><h3>Claims need sources.</h3></div><button id="evidence-button" class="button small outline">+ Add evidence</button></div>
+              <div id="evidence-list" class="evidence-list"><div class="empty-state">No evidence selected.</div></div>
+              <div class="panel-divider"></div>
+              <div class="eyebrow muted">BUSINESS CONTEXT</div>
+              <div class="context-row"><span>Owner</span><strong id="business-owner">—</strong></div>
+              <div class="context-row"><span>Success measure</span><strong id="success-metric">—</strong></div>
+              <div class="context-row"><span>Non-AI alternative</span><strong id="non-ai-alternative">—</strong></div>
+            </section>
+          </div>
+          <section class="panel evaluation-panel" aria-label="Versioned synthetic evaluation factory">
+            <div class="evaluation-header">
+              <div><div class="eyebrow muted">M2 · EVALUATION FACTORY</div><h3>Make reliability measurable.</h3><p>Compare a non-AI search baseline with offline safety rules using versioned fictional policies and adversarial questions.</p></div>
+              <button id="eval-run-button" class="button primary">Run offline evaluation <span>▶</span></button>
+            </div>
+            <div class="evaluation-note">OFFLINE / ZERO MODEL API CALLS · NO REAL CUSTOMER DATA · NOT A DEPLOYMENT APPROVAL</div>
+            <div id="evaluation-results" class="evaluation-results" aria-live="polite"><div class="empty-state">No saved evaluation recorded yet. Run the versioned synthetic suite to see an evidence-based comparison.</div></div>
+          </section>
+          <section class="panel discovery-panel" aria-label="Fictional AI discovery and portfolio triage">
+            <div class="evaluation-header">
+              <div><div class="eyebrow muted">M5 · AI ADOPTION DISCOVERY</div><h3>Start with a decision, not a demo.</h3><p>Interview a fictional sponsor, test the business case against a non-AI alternative, surface data and feasibility constraints, and generate a conditional 30/60/90-day plan. Compare the latest fictional opportunities by transparent triage category, never by an invented ROI score.</p></div>
+              <button id="discovery-create-button" class="button primary" type="button">+ New discovery</button>
+            </div>
+            <div class="evaluation-note">SIMULATED EVIDENCE ONLY · AUTHENTICATED RECORDING, NOT HUMAN VERIFICATION · NEVER A POV OR RELEASE APPROVAL</div>
+            <div id="discovery-portfolio" class="discovery-portfolio" aria-live="polite"><div class="empty-state">No fictional discovery interviews recorded. Create one to examine its proposed next steps.</div></div>
+          </section>
+          <section class="panel adoption-panel" aria-label="Fictional AI adoption decision recommendations">
+            <div class="evaluation-header">
+              <div><div class="eyebrow muted">M3 · ADOPTION DECISION ENGINE</div><h3>Recommend a path. Show the evidence.</h3><p>Four frozen synthetic scenarios demonstrate how business value, data rights, AI evaluation, cost and risk change the recommended next step. These are examples—not decisions on the editable Studio records above.</p></div>
+              <span class="adoption-readonly">READ-ONLY / SIMULATED</span>
+            </div>
+            <div class="evaluation-note">NO COMPOSITE READINESS SCORE · NO REAL HUMAN APPROVAL · NO PRODUCTION AUTHORIZATION</div>
+            <div id="adoption-results" class="adoption-results" aria-live="polite"><div class="empty-state">Loading synthetic recommendations…</div></div>
+          </section>
+          <section class="panel assessment-workshop" aria-label="Create a fictional AI assessment">
+            <div class="evaluation-header">
+              <div><div class="eyebrow muted">M4 · SYNTHETIC ASSESSMENT WORKSHOP</div><h3>Turn a checklist into a decision brief.</h3><p>Describe a fictional opportunity, examine each decision dimension and record its gaps. Every submission creates a persisted, versioned synthetic snapshot with an advisory state and a downloadable executive report.</p></div>
+              <button id="assessment-create-button" class="button primary" type="button">+ New fictional assessment</button>
+            </div>
+            <div class="evaluation-note">ACCOUNT-SCOPED SYNTHETIC SNAPSHOTS · SELF-ENTERED REVIEWER LABELS · NO REAL CUSTOMER OR CONFIDENTIAL DATA</div>
+            <div id="assessment-history" class="assessment-history" aria-live="polite"><div class="empty-state">No custom fictional assessments recorded.</div></div>
+          </section>
+          <footer class="footer">Private synthetic reference · Authenticated account-scoped D1 storage · Hosted API mirrors the Python reference · No real customer data or deployment approval · © Dani Monteiro</footer>
+        </div>
+      </main>
+    </div>
+
+    <dialog id="evidence-dialog" class="modal"><form id="evidence-form" class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted">ADD A SYNTHETIC RECORD</div><h2>Record evidence</h2></div><button type="button" class="close-button" data-close="evidence-dialog" aria-label="Close">×</button></div>
+      <p>Demo input only. Do not enter real client, personal, financial, or confidential information.</p>
+      <label>Evidence class<select name="evidence_class" required><option value="DECLARED">Declared statement</option><option value="DOCUMENTED">Document reference</option><option value="INFERRED">Inference / hypothesis</option></select></label>
+      <label>Synthetic source<input name="source" minlength="4" maxlength="240" required placeholder="e.g. Fictional stakeholder interview" /></label>
+      <label>What does it establish?<textarea name="summary" minlength="12" maxlength="2000" rows="4" required placeholder="Describe a specific synthetic claim or gap"></textarea></label>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="evidence-dialog">Cancel</button><button class="button primary" type="submit">Add unverified evidence</button></div>
+    </form></dialog>
+
+    <dialog id="review-dialog" class="modal"><form id="review-form" class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted">DEMO REVIEW ONLY</div><h2>Review evidence</h2></div><button type="button" class="close-button" data-close="review-dialog" aria-label="Close">×</button></div>
+      <p id="review-summary"></p>
+      <input name="evidence_id" type="hidden" />
+      <label>Review result<select name="status"><option value="VERIFIED">Verified in this demo</option><option value="REJECTED">Rejected</option></select></label>
+      <label>Reviewer name (unverified)<input name="reviewer" minlength="3" maxlength="120" required placeholder="Fictional reviewer" /></label>
+      <label>Review rationale<textarea name="rationale" minlength="10" maxlength="1000" rows="3" required></textarea></label>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="review-dialog">Cancel</button><button type="submit" class="button primary">Record review</button></div>
+    </form></dialog>
+
+    <dialog id="decision-dialog" class="modal"><form id="decision-form" class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted" id="decision-stage-tag">STAGE REVIEW</div><h2>Record a decision</h2></div><button type="button" class="close-button" data-close="decision-dialog" aria-label="Close">×</button></div>
+      <p>Only a designated human may authorize a real project. Here, decisions are authenticated, synthetic rehearsal records, not operational approvals.</p>
+      <label>Decision<select name="status" required><option value="IN_REVIEW">In review</option><option value="HOLD">Hold</option><option value="REWORK">Rework</option><option value="NO_GO">No go</option><option value="GO">Go to next bounded stage</option></select></label>
+      <label>Decision owner (unverified)<input name="owner" minlength="3" maxlength="120" required value="Fictional advisory reviewer" /></label>
+      <label>Rationale<textarea name="rationale" minlength="12" maxlength="2000" rows="3" required placeholder="Explain the reasoning and uncertainty"></textarea></label>
+      <fieldset class="evidence-choices"><legend>Evidence references</legend><div id="evidence-options"></div></fieldset>
+      <label>Unresolved blockers (one per line)<textarea name="blockers" rows="2" placeholder="Leave empty only if none remain"></textarea></label>
+      <label>Alternatives considered (one per line)<textarea name="alternatives" rows="2" placeholder="Including non-AI options"></textarea></label>
+      <div id="decision-error" class="form-error" role="alert" aria-live="assertive" tabindex="-1" hidden></div>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="decision-dialog">Cancel</button><button type="submit" class="button primary">Save decision</button></div>
+    </form></dialog>
+
+    <dialog id="report-dialog" class="modal report-modal"><div class="modal-body">
+      <div class="modal-heading"><div><div class="eyebrow muted" id="report-kind-label">DETERMINISTIC SYNTHETIC REPORT</div><h2 id="report-title">Executive opportunity brief</h2></div><button type="button" class="close-button" data-close="report-dialog" aria-label="Close">×</button></div>
+      <pre id="report-content" class="report-pre"></pre>
+      <div class="form-actions"><button type="button" class="button ghost" data-close="report-dialog">Close</button><button id="download-report" type="button" class="button primary">Download Markdown ↓</button></div>
+    </div></dialog>
+
+    <dialog id="assessment-dialog" class="modal assessment-modal">
+      <form id="assessment-form" class="modal-body">
+        <div class="modal-heading"><div><div class="eyebrow muted">FICTIONAL / PRIVATE TRAINING ONLY</div><h2>Create an adoption assessment</h2></div><button type="button" class="close-button" data-close="assessment-dialog" aria-label="Close">×</button></div>
+        <p>Use invented organizations, policies, people and figures only. This form cannot securely process a real client engagement. Every status is self-declared; a simulated verified flag is not proof.</p>
+        <div class="assessment-form-grid">
+          <label>Opportunity title<input name="title" minlength="8" maxlength="120" required placeholder="e.g. Fictional service policy assistant" /></label>
+          <label>Risk tier<select name="risk_tier"><option value="HIGH">High — independent review required</option><option value="MEDIUM">Medium</option><option value="LOW">Low</option></select></label>
+          <label>Synthetic client ID<input name="client_id" minlength="8" maxlength="70" pattern="[a-z0-9][a-z0-9-]*-demo" required placeholder="e.g. acme-demo" /></label>
+          <label>Synthetic use-case ID<input name="case_id" minlength="4" maxlength="100" pattern="[a-z0-9][a-z0-9-]*" required placeholder="e.g. acme-policy" /></label>
+          <label>Accountable owner (fictional)<input name="accountable_owner" minlength="3" maxlength="120" required placeholder="Fictional decision sponsor" /></label>
+          <label>Non-AI alternative<input name="non_ai_alternative" minlength="8" maxlength="500" required placeholder="Rule-based search, analyst workflow, or another comparator" /></label>
+        </div>
+        <div class="assessment-subheading"><div><div class="eyebrow muted">DECISION DIMENSIONS</div><h3>Evidence before recommendation</h3></div><p>Start with UNKNOWN. PASS needs an evidence reference; simulated verification is an explicit fictional assumption.</p></div>
+        <div id="assessment-checks" class="assessment-checks"></div>
+        <div class="assessment-subheading"><div><div class="eyebrow muted">SEPARATE BLOCKERS</div><h3>What must stop the work?</h3></div><button type="button" id="assessment-add-blocker" class="button outline small">+ Add blocker</button></div>
+        <div id="assessment-blockers" class="assessment-blockers"></div>
+        <label class="assessment-confirm"><input type="checkbox" name="confirmed_fictional" required /><span>I confirm that all entries are invented demonstration material. I understand this is not a customer assessment or a human approval.</span></label>
+        <div class="form-actions"><button type="button" class="button ghost" data-close="assessment-dialog">Cancel</button><button type="submit" class="button primary" id="assessment-submit">Save synthetic snapshot &amp; evaluate</button></div>
+      </form>
+    </dialog>
+
+    <dialog id="discovery-dialog" class="modal assessment-modal">
+      <form id="discovery-form" class="modal-body">
+        <div class="modal-heading"><div><div class="eyebrow muted">SYNTHETIC / PRIVATE CONSULTING EXERCISE</div><h2>AI opportunity discovery</h2></div><button type="button" class="close-button" data-close="discovery-dialog" aria-label="Close">×</button></div>
+        <p>Record an invented organization, invented stakeholders, hypotheses and sources. This private form stores entries under your ChatGPT Site account, but is not approved for confidential customer data. The result is a <strong>discovery recommendation</strong>, not permission to run a pilot.</p>
+        <fieldset class="discovery-group">
+          <legend>01 · Business context and alternative</legend>
+          <div class="assessment-form-grid">
+            <label>Opportunity title<input name="title" minlength="8" maxlength="120" required placeholder="Fictional procurement policy assistant" /></label>
+            <label>Sector (fictional)<input name="sector" minlength="3" maxlength="80" required placeholder="Financial services" /></label>
+            <label>Client ID ending in -demo<input name="client_id" minlength="8" maxlength="70" pattern="[a-z0-9][a-z0-9-]*-demo" required /></label>
+            <label>Use-case ID matching client stem<input name="case_id" minlength="4" maxlength="100" pattern="[a-z0-9][a-z0-9-]*" required /></label>
+            <label>Risk tier<select name="risk_tier"><option value="HIGH">HIGH — independent-review plan needed</option><option value="MEDIUM">MEDIUM</option><option value="LOW">LOW</option></select></label>
+            <label>Fictional sponsor<input name="business_owner" minlength="3" maxlength="120" required /></label>
+          </div>
+          <label>Users affected by this workflow<input name="affected_users" minlength="8" maxlength="240" required placeholder="Fictional analysts and managers" /></label>
+          <label>Business problem, in the users' terms<textarea name="problem" minlength="20" maxlength="1500" rows="2" required></textarea></label>
+          <div class="assessment-form-grid">
+            <label>Current process / baseline workflow<textarea name="current_workflow" minlength="12" maxlength="700" rows="2" required></textarea></label>
+            <label>Success measure (hypothesis)<textarea name="success_metric" minlength="8" maxlength="400" rows="2" required></textarea></label>
+            <label>Expected benefit (not an observed outcome)<textarea name="expected_benefit" minlength="12" maxlength="700" rows="2" required></textarea></label>
+            <label>Credible non-AI alternative<textarea name="non_ai_alternative" minlength="12" maxlength="700" rows="2" required></textarea></label>
+          </div>
+        </fieldset>
+        <fieldset class="discovery-group">
+          <legend>02 · Evidence maturity and blocking conditions</legend>
+          <p class="mini-disclaimer">Statuses are self-declared simulations. Sources are invented titles, not external documents or proof of consent. Unknown assumptions deliberately hold the recommendation.</p>
+          <div class="assessment-form-grid">
+            <label>Baseline<select name="baseline_status"><option value="UNKNOWN">UNKNOWN / NOT MEASURED</option><option value="SIMULATED_MEASURED">SIMULATED_MEASURED</option></select></label>
+            <label>Fictional baseline source<input name="baseline_source" maxlength="240" placeholder="Invented comparative baseline note" /></label>
+            <label>Value hypothesis<select name="value_status"><option value="UNKNOWN">UNKNOWN</option><option value="PLAUSIBLE_SIMULATED">PLAUSIBLE_SIMULATED</option><option value="UNSUPPORTED">UNSUPPORTED → STOP</option></select></label>
+            <label>Non-AI comparison<select name="alternative_status"><option value="NOT_COMPARED">NOT COMPARED</option><option value="COMPARED_SIMULATED">COMPARED_SIMULATED</option></select></label>
+            <label>Fictional comparison source<input name="alternative_source" maxlength="240" placeholder="Invented options comparison note" /></label>
+            <label>Data permissions<select name="data_permission"><option value="UNKNOWN">UNKNOWN</option><option value="GRANTED_SIMULATED">GRANTED_SIMULATED</option><option value="RESTRICTED">RESTRICTED → HOLD</option><option value="DENIED">DENIED → STOP</option></select></label>
+            <label>Fictional permission source<input name="permission_source" maxlength="240" placeholder="Invented approval description" /></label>
+            <label>Data fitness<select name="data_quality"><option value="UNKNOWN">UNKNOWN</option><option value="SUITABLE_SIMULATED">SUITABLE_SIMULATED</option><option value="GAP">GAP → REFINE</option><option value="UNUSABLE">UNUSABLE → STOP</option></select></label>
+            <label>Delivery feasibility<select name="feasibility"><option value="UNKNOWN">UNKNOWN</option><option value="FEASIBLE_SIMULATED">FEASIBLE_SIMULATED</option><option value="GAP">GAP → REFINE</option><option value="BLOCKED">BLOCKED → STOP</option></select></label>
+            <label>People/change readiness<select name="adoption_readiness"><option value="UNKNOWN">UNKNOWN</option><option value="PLAN_SIMULATED">PLAN_SIMULATED</option><option value="GAP">GAP → REFINE</option></select></label>
+            <label>Independent review plan<select name="independent_review"><option value="UNKNOWN">UNKNOWN / NOT PLANNED</option><option value="PLANNED_SIMULATED">PLANNED_SIMULATED</option></select></label>
+          </div>
+          <label>Additional fictional constraints (one per line, max 12)<textarea name="constraints" maxlength="3600" rows="2" placeholder="Fictional integration dependency"></textarea></label>
+        </fieldset>
+        <label class="assessment-confirm"><input type="checkbox" name="confirmed_fictional" required /><span>Every organization, person, source, permission and figure here is invented. I understand this is not a real assessment, a pilot authorization or a deployment approval.</span></label>
+        <div class="form-actions"><button type="button" class="button ghost" data-close="discovery-dialog">Cancel</button><button type="submit" class="button primary" id="discovery-submit">Save discovery &amp; generate plan</button></div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
