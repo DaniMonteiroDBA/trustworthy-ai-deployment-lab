@@ -48,13 +48,24 @@ repository-root Python application into the hosted Worker project.
 The intentionally paused root GitHub Actions workflow must remain paused
 until the owner explicitly resolves the account billing restriction.
 
-## Namecheap domain setup
+## Domain setup — DNS provider must be verified
 
-In Namecheap > Domain List > `danimonteiro.tech` > Advanced DNS, add the
-Site-provided CNAME and verification TXT records for host `lab`. Namecheap's
-**Host** fields are relative to the `danimonteiro.tech` zone. In particular,
-the CNAME Host should be `lab`, not the full FQDN. Keep any unrelated DNS
-records intact.
+On 17 November 2026, the connected Namecheap dashboard showed
+`danimonteiro.tech` as **registered with another registrar**. Searching its
+Namecheap **Domain List** returned no matching editable domain, so we could
+not safely create the records there. Domain registration and authoritative DNS
+hosting are separate; this observation does not establish which nameservers
+currently serve the zone.
+
+First identify the authoritative DNS service for `danimonteiro.tech`. Add the
+Site-provided CNAME and verification TXT records **there**. If the zone is
+hosted in Namecheap FreeDNS or a Namecheap hosting DNS editor, use that
+specific DNS interface; otherwise use the provider currently serving its
+nameservers. Do not transfer the domain or change nameservers just to add
+these records. Keep all existing mail, website and unrelated DNS entries.
+
+In a DNS editor whose **Host** fields are relative to the
+`danimonteiro.tech` zone, use `lab`, not the full FQDN, for the CNAME.
 
 The Site currently provides:
 
